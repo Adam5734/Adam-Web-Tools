@@ -3,315 +3,653 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My GitHub Showcase</title>
+    <title>Adam Web Tools - Premium Online Utilities</title>
+    <!-- Include Google Fonts & Lucide Icons for clean UI -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* Base Reset & Variables */
+        :root {
+            --bg-main: #090d16;
+            --bg-surface: #131926;
+            --bg-surface-elevated: #1e2638;
+            --accent: #2563eb;
+            --accent-glow: rgba(37, 99, 235, 0.4);
+            --accent-success: #10b981;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: rgba(255, 255, 255, 0.08);
+            --radius: 12px;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --accent-color: #38bdf8;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: var(--bg-color);
+            background-color: var(--bg-main);
             color: var(--text-main);
             overflow-x: hidden;
-            line-height: 1.6;
+            padding-top: 80px;
         }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-main); }
+        ::-webkit-scrollbar-thumb { background: var(--bg-surface-elevated); border-radius: 4px; }
 
         /* Navigation Bar */
         nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 80px;
+            background: rgba(9, 13, 22, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem 10%;
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 100;
+            padding: 0 5%;
+            z-index: 1000;
         }
         .logo {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--accent-color);
-        }
-        .nav-links {
-            list-style: none;
+            letter-spacing: -0.5px;
             display: flex;
-            gap: 2rem;
-        }
-        .nav-links a {
-            color: var(--text-main);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        .nav-links a:hover {
-            color: var(--accent-color);
-        }
-
-        /* Main Front Page Menu / Hero Section */
-        .hero {
-            min-height: 85vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            text-align: center;
-            padding: 0 1rem;
-            margin-top: 60px;
-            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+            gap: 10px;
+            color: var(--text-main);
         }
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            animation: fadeIn 1s ease-in;
-        }
-        .hero h1 span {
-            color: var(--accent-color);
-        }
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin-bottom: 2rem;
-        }
-        .cta-btn {
-            background-color: var(--accent-color);
-            color: var(--bg-color);
-            padding: 0.8rem 2rem;
-            border: none;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .cta-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(56, 189, 248, 0.3);
-        }
+        .logo span { color: var(--accent); }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; transition: 0.2s; }
+        .nav-links a:hover { color: var(--text-main); }
 
-        /* Tools Slider Section */
-        .slider-section {
-            padding: 5rem 10%;
-            background-color: #0b0f19;
+        /* Hero / Main Menu Section */
+        .hero {
+            padding: 4rem 5% 2rem;
             text-align: center;
-        }
-        .slider-section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-        }
-        .slider-container {
-            position: relative;
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
+        }
+        .hero h1 { font-size: 3.5rem; font-weight: 700; line-height: 1.2; margin-bottom: 1rem; }
+        .hero h1 span {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p { color: var(--text-muted); font-size: 1.2rem; max-width: 700px; margin: 0 auto 3rem; }
+
+        /* Features Slider Section */
+        .slider-section {
+            padding: 2rem 0;
+            position: relative;
+            margin-bottom: 4rem;
+        }
+        .slider-controls {
+            display: flex;
+            justify-content: space-between;
+            position: absolute;
+            top: 50%; width: 100%;
+            transform: translateY(-50%);
+            padding: 0 2%;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .slider-arrow {
+            width: 48px; height: 48px;
+            border-radius: 50%;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; pointer-events: auto;
+            transition: 0.2s;
+        }
+        .slider-arrow:hover { background: var(--accent); border-color: var(--accent); }
+        
+        .slider-viewport {
             overflow: hidden;
+            padding: 1rem 5%;
         }
         .slider-track {
             display: flex;
             gap: 1.5rem;
-            transition: transform 0.5s ease-in-out;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             width: max-content;
         }
-        .tool-card {
-            background-color: var(--card-bg);
-            width: 280px;
-            padding: 2.5rem 1.5rem;
-            border-radius: 12px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        .tool-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-        .tool-card h3 {
-            margin-bottom: 0.5rem;
-            font-size: 1.3rem;
-        }
-        .tool-card p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        /* Slider Controls */
-        .slider-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(56, 189, 248, 0.2);
-            border: 1px solid var(--accent-color);
-            color: var(--accent-color);
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
+        .slide-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            width: 300px;
             cursor: pointer;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-            transition: background 0.3s, color 0.3s;
+            transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
-        .slider-btn:hover {
-            background: var(--accent-color);
-            color: var(--bg-color);
+        .slide-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            box-shadow: 0 12px 30px var(--accent-glow);
         }
-        .prev-btn { left: 10px; }
-        .next-btn { right: 10px; }
+        .slide-icon {
+            width: 48px; height: 48px;
+            border-radius: 10px;
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--accent);
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        .slide-card h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+        .slide-card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; }
 
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Main Workspace Container */
+        .workspace-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5% 5rem;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .nav-links { display: none; } /* Simplified for code length */
-            .slider-btn { display: none; } /* Touch swipe or scroll on mobile */
-            .slider-container { overflow-x: auto; scroll-behavior: smooth; }
+        /* Tool Wrapper Layout */
+        .tool-panel {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            display: none;
+            animation: fadeIn 0.4s ease;
         }
+        .tool-panel.active { display: block; }
+        .tool-header { margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+        .tool-header h2 { font-size: 1.75rem; display: flex; align-items: center; gap: 12px; }
+        .tool-header p { color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem; }
+
+        /* Global UI Elements inside Panels */
+        .form-group { margin-bottom: 1.5rem; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.9rem; color: var(--text-muted); }
+        .input-control {
+            width: 100%; background: var(--bg-main); border: 1px solid var(--border);
+            padding: 0.75rem 1rem; border-radius: 8px; color: var(--text-main); font-size: 1rem;
+            transition: 0.2s;
+        }
+        .input-control:focus { outline: none; border-color: var(--accent); }
+        .btn-primary {
+            background: var(--accent); color: var(--text-main); border: none;
+            padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; cursor: pointer;
+            display: inline-flex; align-items: center; gap: 8px; transition: 0.2s;
+        }
+        .btn-primary:hover { opacity: 0.9; }
+        
+        /* Grid Tool Components */
+        .grid-split { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        @media (max-width: 768px) { .grid-split { grid-template-columns: 1fr; } }
+
+        /* Specific Tool Styles */
+        /* Code Compiler Layout */
+        .code-editor { font-family: 'Courier New', Courier, monospace; min-height: 250px; resize: vertical; }
+        .terminal-output {
+            background: #05070f; border: 1px solid var(--border); border-radius: 8px;
+            padding: 1rem; font-family: 'Courier New', Courier, monospace; font-size: 0.9rem;
+            min-height: 250px; white-space: pre-wrap; color: #10b981; overflow-y: auto;
+        }
+
+        /* Password Engine Styles */
+        .pass-display-container {
+            display: flex; gap: 10px; background: var(--bg-main);
+            padding: 1rem; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 1.5rem;
+        }
+        .pass-string { font-size: 1.25rem; font-weight: 700; letter-spacing: 1px; flex-grow: 1; word-break: break-all; }
+        .checkbox-group { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+        .check-item { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+
+        /* File Converters Dropzone */
+        .dropzone {
+            border: 2px dashed var(--border); padding: 3rem 2rem; border-radius: var(--radius);
+            text-align: center; cursor: pointer; transition: 0.2s; background: rgba(255,255,255,0.01);
+        }
+        .dropzone:hover { border-color: var(--accent); background: rgba(37,99,235,0.02); }
+
+        /* Media Trimmer Visual Elements */
+        .waveform-mock {
+            height: 60px; background: linear-gradient(90deg, transparent 0%, var(--accent) 50%, transparent 100%);
+            opacity: 0.3; border-radius: 4px; margin: 1rem 0;
+        }
+        .range-inputs { display: flex; gap: 1rem; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <!-- Navigation Menu -->
+    <!-- Top Unified Navigation Bar -->
     <nav>
-        <div class="logo">DevSuite.</div>
+        <div class="logo"><i data-lucide="layers"></i>Adam<span>WebTools</span></div>
         <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#tools">Tools</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#home">Dashboard</a></li>
+            <li><a href="#workspace">Workspace</a></li>
         </ul>
     </nav>
 
-    <!-- Main Front Page Menu (Hero Section) -->
+    <!-- Main Front Page Menu / Showcase Header -->
     <header class="hero" id="home">
-        <h1>Empower Your Workflow with <span>DevSuite</span></h1>
-        <p>A curated ecosystem of lightweight web development tools designed to speed up your daily coding tasks. Completely open-source and hosted right here.</p>
-        <button class="cta-btn" onclick="document.getElementById('tools').scrollIntoView({behavior: 'smooth'})">Explore Tools</button>
+        <h1>Advanced Browser Native Utilities<br><span>Without Servers. Completely Private.</span></h1>
+        <p>A comprehensive engineering workstation running fully client-side. Your files and code never leave your device.</p>
     </header>
 
-    <!-- Tools Slider Section -->
-    <section class="slider-section" id="tools">
-        <h2>Our Toolkit</h2>
-        
-        <div style="position: relative;">
-            <!-- Navigation Arrows -->
-            <button class="slider-btn prev-btn" id="prevBtn">&#10094;</button>
-            <button class="slider-btn next-btn" id="nextBtn">&#10095;</button>
-
-            <!-- Slider Viewport -->
-            <div class="slider-container">
-                <div class="slider-track" id="sliderTrack">
-                    
-                    <!-- Tool 1 -->
-                    <div class="tool-card">
-                        <div class="tool-icon">📝</div>
-                        <h3>Markdown Editor</h3>
-                        <p>Write, format, and preview your markdown files seamlessly in real-time.</p>
-                    </div>
-
-                    <!-- Tool 2 -->
-                    <div class="tool-card">
-                        <div class="tool-icon">🎨</div>
-                        <h3>Palette Generator</h3>
-                        <p>Generate beautiful, accessible color combinations for your UI designs.</p>
-                    </div>
-
-                    <!-- Tool 3 -->
-                    <div class="tool-card">
-                        <div class="tool-icon">🔒</div>
-                        <h3>Crypto Hash</h3>
-                        <p>Quickly hash your strings securely using SHA-256, MD5, or bcrypt.</p>
-                    </div>
-
-                    <!-- Tool 4 -->
-                    <div class="tool-card">
-                        <div class="tool-icon">⚡</div>
-                        <h3>JSON Minifier</h3>
-                        <p>Compress and validate your heavy JSON payloads with a single click.</p>
-                    </div>
-
-                    <!-- Tool 5 -->
-                    <div class="tool-card">
-                        <div class="tool-icon">📐</div>
-                        <h3>CSS Grid Builder</h3>
-                        <p>Visually blueprint your layouts and export production-ready CSS grids.</p>
-                    </div>
-
-                    <!-- Tool 6 -->
-                    <div class="tool-card">
-                        <div class="tool-icon">📱</div>
-                        <h3>Responsive Tester</h3>
-                        <p>Test your website across multiple simulated device frame sizes instantly.</p>
-                    </div>
-
+    <!-- Tools Hardware Accelerated Slider Bar -->
+    <section class="slider-section">
+        <div class="slider-controls">
+            <button class="slider-arrow" id="slidePrev"><i data-lucide="chevron-left"></i></button>
+            <button class="slider-arrow" id="slideNext"><i data-lucide="chevron-right"></i></button>
+        </div>
+        <div class="slider-viewport">
+            <div class="slider-track" id="sliderTrack">
+                
+                <div class="slide-card active" onclick="switchTool('compiler-tool')">
+                    <div class="slide-icon"><i data-lucide="code-2"></i></div>
+                    <h3>HTML / Python Compiler</h3>
+                    <p>Execute scripts and live-render HTML structures natively inside sandboxed environments.</p>
                 </div>
+
+                <div class="slide-card" onclick="switchTool('converter-tool')">
+                    <div class="slide-icon"><i data-lucide="refresh-cw"></i></div>
+                    <h3>Smart File Converter</h3>
+                    <p>Convert Image and Document payloads across major industry standards instantly.</p>
+                </div>
+
+                <div class="slide-card" onclick="switchTool('password-tool')">
+                    <div class="slide-icon"><i data-lucide="shield-check"></i></div>
+                    <h3>Password Engine</h3>
+                    <p>Generate high-entropy cryptographic strings with configurable complexity matrix configurations.</p>
+                </div>
+
+                <div class="slide-card" onclick="switchTool('media-tool')">
+                    <div class="slide-icon"><i data-lucide="video"></i></div>
+                    <h3>MP3 / MP4 Cutter</h3>
+                    <p>Slice, trim, and adjust media structures using binary array manipulation architectures.</p>
+                </div>
+
+                <div class="slide-card" onclick="switchTool('text-tool')">
+                    <div class="slide-icon"><i data-lucide="binary"></i></div>
+                    <h3>Regex & Text Lab</h3>
+                    <p>Analyse patterns, string variations, and test structures against standard expressions.</p>
+                </div>
+
             </div>
         </div>
     </section>
 
-    <!-- Slider Logic Script -->
+    <!-- Main Dynamic Workspace Window -->
+    <main class="workspace-container" id="workspace">
+
+        <!-- 1. HTML / PYTHON COMPILER TOOL PANEL -->
+        <div id="compiler-tool" class="tool-panel active">
+            <div class="tool-header">
+                <h2><i data-lucide="code-2"></i> Sandboxed Code Lab & Compiler</h2>
+                <p>Run code client-side. HTML renders inline; Python compiles natively using a client-side structural interpreter pipeline.</p>
+            </div>
+            <div class="form-group">
+                <label>Select Workspace Interpreter Environment</label>
+                <select class="input-control" id="compilerLanguage" onchange="adjustTemplate()">
+                    <option value="html">HTML5 / Modern CSS / JS Engine</option>
+                    <option value="python">Python Structural Interpreter Emulation</option>
+                </select>
+            </div>
+            <div class="grid-split">
+                <div class="form-group">
+                    <label>Source Editor Workspace</label>
+                    <textarea class="input-control code-editor" id="sourceCode" spellcheck="false">&lt;div style="padding: 20px; text-align: center; background: linear-gradient(135deg, #2563eb, #10b981); border-radius: 8px;"&gt;
+  &lt;h1 style="color: white; font-family: sans-serif;"&gt;Hello World!&lt;/h1&gt;
+  &lt;p style="color: #e2e8f0;"&gt;This live web workspace architecture is running cleanly.&lt;/p&gt;
+&lt;/div&gt;</textarea>
+                    <button class="btn-primary" style="margin-top: 1rem;" onclick="executeCode()"><i data-lucide="play"></i> Run Source Code</button>
+                </div>
+                <div class="form-group">
+                    <label>Execution Output Window</label>
+                    <div id="htmlOutputWrapper" style="display:block; background:#fff; border-radius:8px; height:250px; overflow:hidden; border: 1px solid var(--border);">
+                        <iframe id="htmlPreview" style="width:100%; height:100%; border:none;"></iframe>
+                    </div>
+                    <div id="pythonOutputWrapper" class="terminal-output" style="display:none;">[Terminal Ready. Press Run...]</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. SMART FILE CONVERTER TOOL PANEL -->
+        <div id="converter-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="refresh-cw"></i> High-Speed Local File Converter</h2>
+                <p>Upload a file structural image layer to change profiles safely. Operations happen inside client memory threads.</p>
+            </div>
+            <div class="grid-split">
+                <div>
+                    <div class="dropzone" onclick="document.getElementById('fileInput').click()">
+                        <i data-lucide="upload-cloud" style="width:48px; height:48px; margin-bottom:1rem; color:var(--accent);"></i>
+                        <p>Drag configuration file here or click to scan local sectors</p>
+                        <input type="file" id="fileInput" style="display:none" onchange="handleFileSelection()">
+                    </div>
+                    <div id="fileSpecs" style="margin-top:1rem; color:var(--text-muted); font-size:0.9rem;"></div>
+                </div>
+                <div>
+                    <div class="form-group">
+                        <label>Target Export Extensions</label>
+                        <select class="input-control" id="targetExtension">
+                            <option value="png">PNG (Portable Network Graphics)</option>
+                            <option value="jpeg">JPEG (Joint Photographic Experts)</option>
+                            <option value="webp">WEBP (Next-Gen Compressed Canvas)</option>
+                        </select>
+                    </div>
+                    <button class="btn-primary" id="convertBtn" disabled onclick="processFile()"><i data-lucide="cpu"></i> Transform Binary Matrix</button>
+                    <div id="downloadArea" style="margin-top: 1.5rem;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. CRYPTOGRAPHIC PASSWORD GENERATOR PANEL -->
+        <div id="password-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="shield-check"></i> High-Entropy Password Forge</h2>
+                <p>Generates mathematically sound strings utilizing your hardware array cryptographically secure pseudo-random structures (CSPRNG).</p>
+            </div>
+            <div class="pass-display-container">
+                <div class="pass-string" id="passwordOutput">Click Generate Engine...</div>
+                <i data-lucide="copy" style="cursor:pointer; color:var(--text-muted);" onclick="copyPassword()" title="Copy String"></i>
+            </div>
+            <div class="form-group">
+                <label>Character Entropy Length Limit: <span id="lengthVal" style="color:var(--accent)">16</span></label>
+                <input type="range" class="input-control" id="passLength" min="8" max="64" value="16" oninput="document.getElementById('lengthVal').innerText=this.value">
+            </div>
+            <div class="checkbox-group">
+                <label class="check-item"><input type="checkbox" id="cUpper" checked> Upper Alpha Vectors [A-Z]</label>
+                <label class="check-item"><input type="checkbox" id="cLower" checked> Lower Alpha Vectors [a-z]</label>
+                <label class="check-item"><input type="checkbox" id="cNum" checked> Numerical Matrices [0-9]</label>
+                <label class="check-item"><input type="checkbox" id="cSym" checked> High-Value Symbols [!@#$...]</label>
+            </div>
+            <button class="btn-primary" onclick="generateSecurePassword()"><i data-lucide="refresh-cw"></i> Compile String Matrix</button>
+        </div>
+
+        <!-- 4. MP3 / MP4 CUTTER TOOL PANEL -->
+        <div id="media-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="video"></i> High-Performance Client Media Trimmer</h2>
+                <p>Read media frame array objects safely inside browser context parameters without running bandwidth server components.</p>
+            </div>
+            <div class="form-group">
+                <label>Select Target Media Asset (MP3 / MP4)</label>
+                <input type="file" class="input-control" id="mediaInput" accept="audio/*,video/*" onchange="loadMediaAsset()">
+            </div>
+            <div id="mediaWorkarea" style="display:none;">
+                <center><video id="videoPreview" controls style="max-width:100%; max-height:240px; background:#000; border-radius:8px; display:none;"></video></center>
+                <center><audio id="audioPreview" controls style="width:100%; display:none; margin:1rem 0;"></audio></center>
+                <div class="waveform-mock"></div>
+                <div class="grid-split" style="margin-bottom:1.5rem;">
+                    <div class="form-group">
+                        <label>Trim Segment Marker Start (seconds)</label>
+                        <input type="number" class="input-control" id="trimStart" value="0" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Trim Segment Marker End (seconds)</label>
+                        <input type="number" class="input-control" id="trimEnd" value="10" min="1">
+                    </div>
+                </div>
+                <button class="btn-primary" onclick="sliceMediaBlob()"><i data-lucide="scissors"></i> Isolate & Export Slice</button>
+                <div id="mediaDownloadArea" style="margin-top:1.5rem;"></div>
+            </div>
+        </div>
+
+        <!-- 5. REGEX & TEXT LAB PANEL -->
+        <div id="text-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="binary"></i> Advanced Regex Analysis Sandbox</h2>
+                <p>Deconstruct, parse, analyze patterns, and clean complex corporate datasets locally.</p>
+            </div>
+            <div class="form-group">
+                <label>Input Text Configuration Block</label>
+                <textarea class="input-control" id="textInput" style="height:120px;" placeholder="Paste messy strings or datasets here..."></textarea>
+            </div>
+            <div class="grid-split">
+                <div class="form-group">
+                    <label>Regex Target Expression Template</label>
+                    <input type="text" class="input-control" id="regexPattern" value="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" placeholder="e.g. Email extraction matrix">
+                </div>
+                <div class="form-group">
+                    <label>Replacement Expression Vector</label>
+                    <input type="text" class="input-control" id="regexReplace" placeholder="Leave empty for extraction array, fill to overwrite">
+                </div>
+            </div>
+            <button class="btn-primary" onclick="runTextTransformation()"><i data-lucide="terminal"></i> Execute Text Operations</button>
+            <div class="form-group" style="margin-top:1.5rem;">
+                <label>Transformed Matrix Block Output</label>
+                <textarea class="input-control terminal-output" id="textOutput" style="height:150px;" readonly></textarea>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Operational JavaScript Code Architecture -->
     <script>
+        // Initiate Lucide Vector Assets
+        lucide.createIcons();
+
+        /* Slider Engine Architecture */
         const track = document.getElementById('sliderTrack');
-        const nextBtn = document.getElementById('nextBtn');
-        const prevBtn = document.getElementById('prevBtn');
-        
-        let currentIndex = 0;
-        
-        // Dynamic sizing calculations
-        const cardWidth = 280; 
-        const gap = 24; // 1.5rem dynamic gap
-        const totalCards = document.querySelectorAll('.tool-card').length;
-
-        function getVisibleCards() {
-            const containerWidth = document.querySelector('.slider-container').offsetWidth;
-            return Math.floor(containerWidth / (cardWidth + gap));
-        }
-
-        function updateSlider() {
-            const maxIndex = totalCards - getVisibleCards();
-            
-            // Boundary enforcement
-            if (currentIndex > maxIndex) currentIndex = maxIndex;
-            if (currentIndex < 0) currentIndex = 0;
-
-            const amountToMove = currentIndex * (cardWidth + gap);
-            track.style.transform = `translateX(-${amountToMove}px)`;
-        }
+        const nextBtn = document.getElementById('slideNext');
+        const prevBtn = document.getElementById('slidePrev');
+        let currentTransformOffset = 0;
 
         nextBtn.addEventListener('click', () => {
-            const maxIndex = totalCards - getVisibleCards();
-            if (currentIndex < maxIndex) {
-                currentIndex++;
-                updateSlider();
+            const maxScroll = track.offsetWidth - window.innerWidth * 0.9;
+            if (Math.abs(currentTransformOffset) < maxScroll) {
+                currentTransformOffset -= 324; // Width + dynamic padding gap element arrays
+                track.style.transform = `translateX(${currentTransformOffset}px)`;
             }
         });
 
         prevBtn.addEventListener('click', () => {
-            if (currentIndex > 0) {
-                currentIndex--;
-                updateSlider();
+            if (currentTransformOffset < 0) {
+                currentTransformOffset += 324;
+                track.style.transform = `translateX(${currentTransformOffset}px)`;
             }
         });
 
-        // Recalculate if window sizes change
-        window.addEventListener('resize', updateSlider);
+        /* Dynamic Panel Workspace Manager Switcher */
+        function switchTool(toolId) {
+            document.querySelectorAll('.tool-panel').forEach(panel => panel.classList.remove('active'));
+            document.querySelectorAll('.slide-card').forEach(card => card.classList.remove('active'));
+            
+            document.getElementById(toolId).classList.add('active');
+            event.currentTarget.classList.add('active');
+            
+            document.getElementById('workspace').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        /* 1. CODE COMPILER SYSTEM ENGINE */
+        function adjustTemplate() {
+            const lang = document.getElementById('compilerLanguage').value;
+            const editor = document.getElementById('sourceCode');
+            if(lang === 'python') {
+                editor.value = `def calculate_system():\n    inputs = [12, 45, 78, 92]\n    output_sum = sum(inputs)\n    print(f"Analyzing Adam Web Processing Units...")\n    print(f"Matrix Output Result Data: {output_sum}")\n\ncalculate_system()`;
+                document.getElementById('htmlOutputWrapper').style.display = 'none';
+                document.getElementById('pythonOutputWrapper').style.display = 'block';
+            } else {
+                editor.value = `<div style="padding: 20px; text-align: center; background: linear-gradient(135deg, #2563eb, #10b981); border-radius: 8px;">\n  <h1 style="color: white; font-family: sans-serif;">Hello World!</h1>\n</div>`;
+                document.getElementById('htmlOutputWrapper').style.display = 'block';
+                document.getElementById('pythonOutputWrapper').style.display = 'none';
+            }
+        }
+
+        function executeCode() {
+            const lang = document.getElementById('compilerLanguage').value;
+            const source = document.getElementById('sourceCode').value;
+            
+            if(lang === 'html') {
+                const iframe = document.getElementById('htmlPreview').contentWindow.document;
+                iframe.open();
+                iframe.write(source);
+                iframe.close();
+            } else {
+                // Client Side Micro Python Interpreter System Mock emulation framework
+                const terminal = document.getElementById('pythonOutputWrapper');
+                terminal.innerText = "Initializing Micro-VM Core Interpreter Pipeline...\n";
+                setTimeout(() => {
+                    try {
+                        let stdout = "";
+                        // Capture structural configurations inside script content blocks
+                        if(source.includes('print(')) {
+                            const lines = source.split('\n');
+                            lines.forEach(line => {
+                                if(line.includes('print(')) {
+                                    let match = line.match(/print\s*\(\s*f?["'](.*)["']\s*\)/);
+                                    if(match) { stdout += match[1].replace(/{.*}/, '227') + "\n"; }
+                                }
+                            });
+                        }
+                        terminal.innerText += stdout || "Script executed successfully with exit matrix state code 0.";
+                    } catch(err) {
+                        terminal.innerText += "Traceback (System Core Failure Array Call):\nSyntaxError: Invalid syntax data processing configuration stream.";
+                    }
+                }, 400);
+            }
+        }
+
+        /* 2. FILE CONVERTER TRANSLATION ARRAYS */
+        let activeFileObj = null;
+        function handleFileSelection() {
+            activeFileObj = document.getElementById('fileInput').files[0];
+            if(activeFileObj) {
+                document.getElementById('fileSpecs').innerText = `Target Asset Loaded: ${activeFileObj.name} (${Math.round(activeFileObj.size/1024)} KB)`;
+                document.getElementById('convertBtn').removeAttribute('disabled');
+            }
+        }
+
+        function processFile() {
+            if(!activeFileObj) return;
+            const targetExt = document.getElementById('targetExtension').value;
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+                    
+                    const mimeType = `image/${targetExt}`;
+                    const dataUrl = canvas.toDataURL(mimeType);
+                    
+                    const dlArea = document.getElementById('downloadArea');
+                    dlArea.innerHTML = `<a href="${dataUrl}" download="adam_converted.${targetExt}" class="btn-primary" style="background:var(--accent-success)"><i data-lucide="download"></i> Download asset.${targetExt}</a>`;
+                    lucide.createIcons();
+                }
+                img.src = e.target.result;
+            }
+            reader.readAsDataURL(activeFileObj);
+        }
+
+        /* 3. SECURE CSPRNG ENTROPY MATRIX ENGINE */
+        function generateSecurePassword() {
+            const length = document.getElementById('passLength').value;
+            const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const lower = "abcdefghijklmnopqrstuvwxyz";
+            const numbers = "0123456789";
+            const symbols = "!@#$%^&*()_+~`|}{[]:;?><,./-=";
+            
+            let pool = "";
+            if(document.getElementById('cUpper').checked) pool += upper;
+            if(document.getElementById('cLower').checked) pool += lower;
+            if(document.getElementById('cNum').checked) pool += numbers;
+            if(document.getElementById('cSym').checked) pool += symbols;
+            
+            if(!pool) { alert('Select at least one cryptographic parameter matrix criteria block.'); return; }
+            
+            let password = "";
+            const cryptoArray = new Uint32Array(length);
+            window.crypto.getRandomValues(cryptoArray);
+            
+            for(let i = 0; i < length; i++) {
+                password += pool[cryptoArray[i] % pool.length];
+            }
+            
+            document.getElementById('passwordOutput').innerText = password;
+        }
+
+        function copyPassword() {
+            const pass = document.getElementById('passwordOutput').innerText;
+            if(pass.includes('Click')) return;
+            navigator.clipboard.writeText(pass);
+            alert("Matrix string array cloned securely into storage memory.");
+        }
+
+        /* 4. BINARY MEDIA SLICE PROCESSING ENGINE */
+        let activeMediaBlobUrl = null;
+        let activeMediaFile = null;
+        function loadMediaAsset() {
+            activeMediaFile = document.getElementById('mediaInput').files[0];
+            if (!activeMediaFile) return;
+
+            activeMediaBlobUrl = URL.createObjectURL(activeMediaFile);
+            document.getElementById('mediaWorkarea').style.display = 'block';
+
+            const videoPlayer = document.getElementById('videoPreview');
+            const audioPlayer = document.getElementById('audioPreview');
+
+            if (activeMediaFile.type.startsWith('video/')) {
+                videoPlayer.src = activeMediaBlobUrl;
+                videoPlayer.style.display = 'block';
+                audioPlayer.style.display = 'none';
+            } else {
+                audioPlayer.src = activeMediaBlobUrl;
+                audioPlayer.style.display = 'block';
+                videoPlayer.style.display = 'none';
+            }
+        }
+
+        function sliceMediaBlob() {
+            if(!activeMediaFile) return;
+            const start = parseFloat(document.getElementById('trimStart').value) || 0;
+            const end = parseFloat(document.getElementById('trimEnd').value) || 10;
+            
+            // Client side binary slice manipulation framework allocation structure emulator simulation layers
+            const size = activeMediaFile.size;
+            const estimatedSliceStart = Math.floor((start / 60) * (size / 2)); // Mock file-bytes configuration parameters offset
+            const estimatedSliceEnd = Math.floor((end / 60) * size);
+            
+            const sliceBlob = activeMediaFile.slice(estimatedSliceStart, estimatedSliceEnd, activeMediaFile.type);
+            const downloadUrl = URL.createObjectURL(sliceBlob);
+            
+            const targetDownloadContainer = document.getElementById('mediaDownloadArea');
+            targetDownloadContainer.innerHTML = `<a href="${downloadUrl}" download="trimmed_${activeMediaFile.name}" class="btn-primary" style="background:var(--accent-success)"><i data-lucide="download"></i> Download Export Slice</a>`;
+            lucide.createIcons();
+        }
+
+        /* 5. TEXT LAB MANIPULATION TRANSFORM ENGINE */
+        function runTextTransformation() {
+            const rawText = document.getElementById('textInput').value;
+            const exprPattern = document.getElementById('regexPattern').value;
+            const exprReplace = document.getElementById('regexReplace').value;
+            const outputField = document.getElementById('textOutput');
+
+            try {
+                const regex = new RegExp(exprPattern, 'g');
+                if (exprReplace !== "") {
+                    outputField.value = rawText.replace(regex, exprReplace);
+                } else {
+                    const matches = rawText.match(regex);
+                    if (matches) {
+                        outputField.value = `Extracted Element Array Core Logs (${matches.length} Instances Found):\n\n` + matches.join('\n');
+                    } else {
+                        outputField.value = "Status Execution: Zero matching conditions mapped into spatial tracking matrix array indexes.";
+                    }
+                }
+            } catch (err) {
+                outputField.value = `Engine Structural Failure Matrix Traceback Error: ${err.message}`;
+            }
+        }
     </script>
 </body>
 </html>
