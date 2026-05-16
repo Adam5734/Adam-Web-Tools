@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adam Web Tools - Professional Online Utilities</title>
     <!-- Include Google Fonts & Lucide Icons for clean UI -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
@@ -55,16 +55,23 @@
             padding: 0 5%;
             z-index: 1000;
         }
-        .logo {
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        .logo-svg {
+            width: 36px;
+            height: 36px;
+        }
+        .logo-text {
             font-size: 1.5rem;
             font-weight: 700;
             letter-spacing: -0.5px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
             color: var(--text-main);
         }
-        .logo span { color: var(--accent); }
+        .logo-text span { color: var(--accent); }
         .nav-links { display: flex; gap: 2rem; list-style: none; }
         .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; transition: 0.2s; }
         .nav-links a:hover { color: var(--text-main); }
@@ -231,9 +238,19 @@
 </head>
 <body>
 
-    <!-- Top Unified Navigation Bar -->
+    <!-- Top Unified Navigation Bar with Inline Logo SVG -->
     <nav>
-        <div class="logo"><i data-lucide="layers"></i>Adam<span>WebTools</span></div>
+        <a href="#home" class="logo-container">
+            <svg class="logo-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Outer Layer Bracket Geometric Shape -->
+                <path d="M10 6H6V10M6 22V26H10M22 26H26V22M26 10V6H22" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <!-- Central Core Accent Node Core -->
+                <path d="M13 11L9 16L13 21" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M19 11L23 16L19 21" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M14 22L18 10" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+            <div class="logo-text">Adam<span>WebTools</span></div>
+        </a>
         <ul class="nav-links">
             <li><a href="#home">Dashboard</a></li>
             <li><a href="#workspace">Workspace</a></li>
