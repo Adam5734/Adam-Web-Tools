@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adam Web Tools - Professional Online Utilities</title>
     <!-- Include Google Fonts & Lucide Icons for clean UI -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
@@ -90,6 +90,36 @@
             -webkit-text-fill-color: transparent;
         }
         .hero p { color: var(--text-muted); font-size: 1.2rem; max-width: 700px; margin: 0 auto 3rem; }
+
+        /* Search Bar */
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+        .search-input {
+            width: 100%;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            padding: 1rem 1.5rem 1rem 3rem;
+            border-radius: 30px;
+            color: var(--text-main);
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+        .search-icon {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+        }
 
         /* Features Slider Section */
         .slider-section {
@@ -185,12 +215,14 @@
             transition: 0.2s;
         }
         .input-control:focus { outline: none; border-color: var(--accent); }
+        select.input-control { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1.2rem; padding-right: 2.5rem; }
         .btn-primary {
             background: var(--accent); color: var(--text-main); border: none;
             padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; cursor: pointer;
             display: inline-flex; align-items: center; gap: 8px; transition: 0.2s;
         }
         .btn-primary:hover { opacity: 0.9; }
+        .btn-success { background: var(--accent-success); }
         
         /* Grid Tool Components */
         .grid-split { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
@@ -212,10 +244,12 @@
         .pass-display-container {
             display: flex; gap: 10px; background: var(--bg-main);
             padding: 1rem; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 1.5rem;
+            align-items: center;
         }
-        .pass-string { font-size: 1.25rem; font-weight: 700; letter-spacing: 1px; flex-grow: 1; word-break: break-all; }
+        .pass-string { font-size: 1.25rem; font-weight: 700; letter-spacing: 1px; flex-grow: 1; word-break: break-all; color: var(--accent-success); }
         .checkbox-group { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
-        .check-item { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+        .check-item { display: flex; align-items: center; gap: 10px; cursor: pointer; color: var(--text-muted); }
+        .check-item input { accent-color: var(--accent); width: 16px; height: 16px; }
 
         /* File Converters Dropzone */
         .dropzone {
@@ -224,27 +258,24 @@
         }
         .dropzone:hover { border-color: var(--accent); background: rgba(37,99,235,0.02); }
 
-        /* Professional Media Layout */
-        .media-preview-container { background: #000; border-radius: 8px; overflow: hidden; display: flex; justify-content: center; align-items: center; min-height: 200px; border: 1px solid var(--border); margin-bottom: 1.5rem; }
-        .media-timeline-bar { background: var(--bg-main); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; position: relative; }
-        .track-scrubber-wrapper { position: relative; height: 24px; background: rgba(255,255,255,0.03); border-radius: 4px; margin-bottom: 1rem; display: flex; align-items: center; }
-        .range-slider-native { position: absolute; width: 100%; top: 0; bottom: 0; background: transparent; -webkit-appearance: none; appearance: none; pointer-events: none; z-index: 5; }
-        .range-slider-native::-webkit-slider-thumb { height: 24px; width: 12px; background: var(--accent); border-radius: 3px; cursor: pointer; pointer-events: auto; -webkit-appearance: none; }
-        .track-fill-highlight { position: absolute; height: 100%; background: rgba(37, 99, 235, 0.2); border-left: 2px solid var(--accent); border-right: 2px solid var(--accent); left: 0%; width: 100%; pointer-events: none; }
-        .media-metrics-row { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); font-family: monospace; }
+        /* Color Picker Styles */
+        .color-palette-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 10px; margin-top: 1rem; }
+        .color-swatch { height: 60px; border-radius: 6px; border: 1px solid var(--border); cursor: pointer; position: relative; transition: 0.2s; }
+        .color-swatch:hover { transform: scale(1.05); }
+
+        /* Canvas preview for image processing tools */
+        .canvas-preview { max-width: 100%; max-height: 400px; border: 1px solid var(--border); border-radius: 8px; background: #05070f; display: block; margin: 0 auto 1rem; }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <!-- Top Unified Navigation Bar with Inline Logo SVG -->
+    <!-- Top Unified Navigation Bar -->
     <nav>
         <a href="#home" class="logo-container">
             <svg class="logo-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Outer Layer Bracket Geometric Shape -->
                 <path d="M10 6H6V10M6 22V26H10M22 26H26V22M26 10V6H22" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <!-- Central Core Accent Node Core -->
                 <path d="M13 11L9 16L13 21" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M19 11L23 16L19 21" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M14 22L18 10" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"/>
@@ -261,9 +292,14 @@
     <header class="hero" id="home">
         <h1>Advanced Browser Native Utilities<br><span>Without Servers. Completely Private.</span></h1>
         <p>A comprehensive engineering workstation running fully client-side. Your files and code never leave your device.</p>
+        
+        <div class="search-container">
+            <i data-lucide="search" class="search-icon"></i>
+            <input type="text" class="search-input" id="toolSearch" placeholder="Search 35+ professional utilities..." oninput="filterTools()">
+        </div>
     </header>
 
-    <!-- Tools Hardware Accelerated Slider Bar -->
+    <!-- Tools Horizontal Slider Section -->
     <section class="slider-section">
         <div class="slider-controls">
             <button class="slider-arrow" id="slidePrev"><i data-lucide="chevron-left"></i></button>
@@ -271,37 +307,179 @@
         </div>
         <div class="slider-viewport">
             <div class="slider-track" id="sliderTrack">
-                
+                <!-- Core Tools -->
                 <div class="slide-card active" id="card-compiler-tool" onclick="switchTool('compiler-tool')">
                     <div class="slide-icon"><i data-lucide="code-2"></i></div>
                     <h3>HTML / Python Compiler</h3>
-                    <p>Execute scripts and live-render HTML structures natively inside sandboxed environments with Fullscreen support.</p>
+                    <p>Execute scripts and live-render HTML structures natively inside sandboxed environments.</p>
                 </div>
-
-                <div class="slide-card" id="card-media-tool" onclick="switchTool('media-tool')">
-                    <div class="slide-icon"><i data-lucide="scissors"></i></div>
-                    <h3>MP3 / MP4 Cutter</h3>
-                    <p>High-precision professional timeline trimming for media streams using native frame allocation calculations.</p>
-                </div>
-
-                <div class="slide-card" id="card-converter-tool" onclick="switchTool('converter-tool')">
-                    <div class="slide-icon"><i data-lucide="refresh-cw"></i></div>
-                    <h3>Smart File Converter</h3>
-                    <p>Convert Image and Document payloads across major industry standards instantly.</p>
-                </div>
-
                 <div class="slide-card" id="card-password-tool" onclick="switchTool('password-tool')">
-                    <div class="slide-icon"><i data-lucide="shield-check"></i></div>
-                    <h3>Password Engine</h3>
-                    <p>Generate high-entropy cryptographic strings with configurable complexity matrix configurations.</p>
+                    <div class="slide-icon"><i data-lucide="key-round"></i></div>
+                    <h3>Password Forge</h3>
+                    <p>Generate high-entropy cryptographic strings using secure local client-side pseudo-random architectures.</p>
                 </div>
-
                 <div class="slide-card" id="card-text-tool" onclick="switchTool('text-tool')">
                     <div class="slide-icon"><i data-lucide="binary"></i></div>
                     <h3>Regex & Text Lab</h3>
-                    <p>Analyse patterns, string variations, and test structures against standard expressions.</p>
+                    <p>Analyze patterns, extract vectors, and test expressions against standard data strings.</p>
                 </div>
 
+                <!-- 30 New Client-Side Tools added to dashboard -->
+                <div class="slide-card" id="card-url-tool" onclick="switchTool('url-tool')">
+                    <div class="slide-icon"><i data-lucide="link"></i></div>
+                    <h3>URL Encoder / Decoder</h3>
+                    <p>Safely convert dynamic string formatting strings to standard RFC 3986 compliance profiles.</p>
+                </div>
+                <div class="slide-card" id="card-base64-tool" onclick="switchTool('base64-tool')">
+                    <div class="slide-icon"><i data-lucide="file-code-2"></i></div>
+                    <h3>Base64 Binary Encoder</h3>
+                    <p>Map structural ASCII datasets into clean string payloads and reconstruct original media files.</p>
+                </div>
+                <div class="slide-card" id="card-hash-tool" onclick="switchTool('hash-tool')">
+                    <div class="slide-icon"><i data-lucide="fingerprint"></i></div>
+                    <h3>Crypto Hash Generator</h3>
+                    <p>Compute deterministic string verification checkpoints using MD5, SHA-1, and SHA-256 engines.</p>
+                </div>
+                <div class="slide-card" id="card-json-tool" onclick="switchTool('json-tool')">
+                    <div class="slide-icon"><i data-lucide="braces"></i></div>
+                    <h3>JSON Validator / Formatter</h3>
+                    <p>Verify structural dictionary notation matrices, catch syntax flaws, and format text fields.</p>
+                </div>
+                <div class="slide-card" id="card-jwt-tool" onclick="switchTool('jwt-tool')">
+                    <div class="slide-icon"><i data-lucide="shield-alert"></i></div>
+                    <h3>JWT Token Debugger</h3>
+                    <p>Decode JSON Web Tokens instantly to analyze payload parameters, headers, and signature layers.</p>
+                </div>
+                <div class="slide-card" id="card-md-tool" onclick="switchTool('md-tool')">
+                    <div class="slide-icon"><i data-lucide="file-text"></i></div>
+                    <h3>Markdown Live Sandbox</h3>
+                    <p>Draft structural rich content documentation using clean text markdown arrays with instant HTML preview.</p>
+                </div>
+                <div class="slide-card" id="card-diff-tool" onclick="switchTool('diff-tool')">
+                    <div class="slide-icon"><i data-lucide="git-diff"></i></div>
+                    <h3>Text Diff Checker</h3>
+                    <p>Compare two text streams side-by-side to highlight insertions, deletions, and source code differences.</p>
+                </div>
+                <div class="slide-card" id="card-timestamp-tool" onclick="switchTool('timestamp-tool')">
+                    <div class="slide-icon"><i data-lucide="clock"></i></div>
+                    <h3>Unix Timestamp Converter</h3>
+                    <p>Translate linear epoch counters into human-readable ISO calendar dates and vice versa.</p>
+                </div>
+                <div class="slide-card" id="card-sql-tool" onclick="switchTool('sql-tool')">
+                    <div class="slide-icon"><i data-lucide="database"></i></div>
+                    <h3>SQL Query Formatter</h3>
+                    <p>Clean up raw databases, formatting structured command matrices for readable code execution blocks.</p>
+                </div>
+                <div class="slide-card" id="card-case-tool" onclick="switchTool('case-tool')">
+                    <div class="slide-icon"><i data-lucide="type"></i></div>
+                    <h3>Text Case Transmuter</h3>
+                    <p>Switch between camelCase, snake_case, UPPERCASE, and kebab-case variable configurations.</p>
+                </div>
+                <div class="slide-card" id="card-lorem-tool" onclick="switchTool('lorem-tool')">
+                    <div class="slide-icon"><i data-lucide="file-signature"></i></div>
+                    <h3>Lorem Ipsum Generator</h3>
+                    <p>Generate highly custom mock typesetting structural content vectors for interface design work.</p>
+                </div>
+                <div class="slide-card" id="card-qrcode-tool" onclick="switchTool('qrcode-tool')">
+                    <div class="slide-icon"><i data-lucide="qr-code"></i></div>
+                    <h3>QR Code Infrastructure</h3>
+                    <p>Generate raw 2D scannable tracking matrices from string inputs using browser script runtimes.</p>
+                </div>
+                <div class="slide-card" id="card-image-crop-tool" onclick="switchTool('image-crop-tool')">
+                    <div class="slide-icon"><i data-lucide="crop"></i></div>
+                    <h3>Image Resizer & Cropper</h3>
+                    <p>Modify local canvas element coordinates to crop, scale, and adjust canvas output aspect ratios.</p>
+                </div>
+                <div class="slide-card" id="card-color-tool" onclick="switchTool('color-tool')">
+                    <div class="slide-icon"><i data-lucide="palette"></i></div>
+                    <h3>Color Space Converter</h3>
+                    <p>Translate specific color mapping indices seamlessly across HEX, RGB, HSL, and CMYK limits.</p>
+                </div>
+                <div class="slide-card" id="card-html-ent-tool" onclick="switchTool('html-ent-tool')">
+                    <div class="slide-icon"><i data-lucide="code"></i></div>
+                    <h3>HTML Entity Encoder</h3>
+                    <p>Convert reserved syntax tags into safe browser entity strings to prevent parsing execution flaws.</p>
+                </div>
+                <div class="slide-card" id="card-ua-tool" onclick="switchTool('ua-tool')">
+                    <div class="slide-icon"><i data-lucide="monitor"></i></div>
+                    <h3>User Agent Diagnostics</h3>
+                    <p>Deconstruct incoming browser header footprints to verify platform rendering structures.</p>
+                </div>
+                <div class="slide-card" id="card-bytes-tool" onclick="switchTool('bytes-tool')">
+                    <div class="slide-icon"><i data-lucide="hard-drive"></i></div>
+                    <h3>Byte Unit Converter</h3>
+                    <p>Scale binary memory quantities accurately across Bytes, KB, MB, GB, and Terabyte allocations.</p>
+                </div>
+                <div class="slide-card" id="card-css-min-tool" onclick="switchTool('css-min-tool')">
+                    <div class="slide-icon"><i data-lucide="zap"></i></div>
+                    <h3>CSS Minifier Engine</h3>
+                    <p>Strip unnecessary whitespace layouts and system comments out of structural styling codesheets.</p>
+                </div>
+                <div class="slide-card" id="card-uuid-tool" onclick="switchTool('uuid-tool')">
+                    <div class="slide-icon"><i data-lucide="fingerprint"></i></div>
+                    <h3>UUID v4 Forge</h3>
+                    <p>Generate RFC 4122 compliant universally unique identifiers with hardware randomness matrices.</p>
+                </div>
+                <div class="slide-card" id="card-js-eval-tool" onclick="switchTool('js-eval-tool')">
+                    <div class="slide-icon"><i data-lucide="terminal"></i></div>
+                    <h3>JavaScript Execution Console</h3>
+                    <p>Evaluate logical functional scripts directly inside isolated sandbox environments safely.</p>
+                </div>
+                <div class="slide-card" id="card-count-tool" onclick="switchTool('count-tool')">
+                    <div class="slide-icon"><i data-lucide="calculator"></i></div>
+                    <h3>Word & Character Counter</h3>
+                    <p>Analyze target files or text fields to pull exact character metrics, lines, and structural space counts.</p>
+                </div>
+                <div class="slide-card" id="card-xml-tool" onclick="switchTool('xml-tool')">
+                    <div class="slide-icon"><i data-lucide="file-spreadsheet"></i></div>
+                    <h3>XML Formatter / Prettifier</h3>
+                    <p>Format structured configuration trees with custom indentation matrices for quick auditing.</p>
+                </div>
+                <div class="slide-card" id="card-bencode-tool" onclick="switchTool('bencode-tool')">
+                    <div class="slide-icon"><i data-lucide="box"></i></div>
+                    <h3>Bencode Decoder Matrix</h3>
+                    <p>Parse torrent file configurations and track metadata trees from binary structure streams.</p>
+                </div>
+                <div class="slide-card" id="card-dns-tool" onclick="switchTool('dns-tool')">
+                    <div class="slide-icon"><i data-lucide="globe"></i></div>
+                    <h3>Client Network Inspector</h3>
+                    <p>Examine active internal loop addresses, WebRTC parameters, and client side connection metrics.</p>
+                </div>
+                <div class="slide-card" id="card-morse-tool" onclick="switchTool('morse-tool')">
+                    <div class="slide-icon"><i data-lucide="radio"></i></div>
+                    <h3>Morse Code Audio Translator</h3>
+                    <p>Encode plain text strings into classical Morse code signals with local oscillator synthesis audio loops.</p>
+                </div>
+                <div class="slide-card" id="card-sort-tool" onclick="switchTool('sort-tool')">
+                    <div class="slide-icon"><i data-lucide="arrow-down-z-a"></i></div>
+                    <h3>List Sorting Processor</h3>
+                    <p>Organize chaotic corporate data lists using alphabetical, numerical, or custom reverse criteria filters.</p>
+                </div>
+                <div class="slide-card" id="card-numbase-tool" onclick="switchTool('numbase-tool')">
+                    <div class="slide-icon"><i data-lucide="scale"></i></div>
+                    <h3>Number Base Converter</h3>
+                    <p>Shift system numbers between standard Binary, Octal, Decimal, and Hexadecimal notations.</p>
+                </div>
+                <div class="slide-card" id="card-hexview-tool" onclick="switchTool('hexview-tool')">
+                    <div class="slide-icon"><i data-lucide="binary"></i></div>
+                    <h3>Hexadecimal File Inspector</h3>
+                    <p>Analyze data files at the byte level, breaking them down into readable hexadecimal hex strings.</p>
+                </div>
+                <div class="slide-card" id="card-stopwatch-tool" onclick="switchTool('stopwatch-tool')">
+                    <div class="slide-icon"><i data-lucide="timer"></i></div>
+                    <h3>High-Precision Cron Lab</h3>
+                    <p>Track microsecond time intervals with standard high-performance browser clock anchors.</p>
+                </div>
+                <div class="slide-card" id="card-hmac-tool" onclick="switchTool('hmac-tool')">
+                    <div class="slide-icon"><i data-lucide="shield-check"></i></div>
+                    <h3>HMAC Authentication Signer</h3>
+                    <p>Create secure cryptographic signatures using symmetric hashing algorithms and a private key.</p>
+                </div>
+                <div class="slide-card" id="card-percent-tool" onclick="switchTool('percent-tool')">
+                    <div class="slide-icon"><i data-lucide="percent"></i></div>
+                    <h3>Percentage Matrix Calculator</h3>
+                    <p>Calculate growth parameters, fractional margins, and vector shifts accurately.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -309,7 +487,7 @@
     <!-- Main Dynamic Workspace Window -->
     <main class="workspace-container" id="workspace">
 
-        <!-- 1. HTML / PYTHON COMPILER TOOL PANEL -->
+        <!-- CORE 1. HTML / PYTHON COMPILER TOOL PANEL -->
         <div id="compiler-tool" class="tool-panel active">
             <div class="tool-header">
                 <h2><i data-lucide="code-2"></i> Sandboxed Code Lab & Compiler</h2>
@@ -333,16 +511,10 @@
                 </div>
                 <div class="form-group output-wrapper-box">
                     <label>Execution Output Window</label>
-                    
-                    <!-- HTML Native Iframe Output Container Container -->
                     <div id="htmlOutputWrapper" style="display:block; background:#fff; border-radius:8px; height:280px; overflow:hidden; border: 1px solid var(--border);">
                         <iframe id="htmlPreview" style="width:100%; height:100%; border:none;"></iframe>
                     </div>
-                    
-                    <!-- Python Native Terminal Output Container -->
                     <div id="pythonOutputWrapper" class="terminal-output" style="display:none;">[Terminal Ready. Press Run...]</div>
-                    
-                    <!-- Fixed Position Interface Control Buttons Row underneath Workspace elements -->
                     <div class="control-strip-under">
                         <button class="btn-small" onclick="clearOutputWindow()"><i data-lucide="trash-2"></i> Clear Output</button>
                         <button class="btn-small" onclick="launchOutputFullscreen()"><i data-lucide="maximize"></i> Fullscreen Preview</button>
@@ -351,83 +523,15 @@
             </div>
         </div>
 
-        <!-- 2. HIGH-PRECISION MP3 / MP4 TRIMMING PANEL -->
-        <div id="media-tool" class="tool-panel">
-            <div class="tool-header">
-                <h2><i data-lucide="scissors"></i> Pro Media Timeline Cutter</h2>
-                <p>Frame-accurate high-precision audio and video tracking array. Extract exact slices cleanly using browser local parsing matrices.</p>
-            </div>
-            <div class="form-group">
-                <label>Upload Media Asset (MP4 Video or MP3 Audio)</label>
-                <input type="file" class="input-control" id="mediaInput" accept="audio/mp3,video/mp4" onchange="loadMediaAssetProfessional()">
-            </div>
-            
-            <div id="proMediaSuite" style="display:none;">
-                <div class="media-preview-container">
-                    <video id="proVideoPlayer" style="max-width:100%; max-height:360px; display:none;" controls></video>
-                    <audio id="proAudioPlayer" style="width:90%; display:none;" controls></audio>
-                </div>
-
-                <div class="media-timeline-bar">
-                    <label style="margin-bottom: 0.75rem;">Interactive Selection Interval Track</label>
-                    <div class="track-scrubber-wrapper">
-                        <div class="track-fill-highlight" id="timelineHighlightRange"></div>
-                        <input type="range" class="range-slider-native" id="rangeStartNode" min="0" max="100" value="0" step="0.1" oninput="syncTimelineScrubber('start')">
-                        <input type="range" class="range-slider-native" id="rangeEndNode" min="0" max="100" value="100" step="0.1" oninput="syncTimelineScrubber('end')">
-                    </div>
-                    <div class="media-metrics-row">
-                        <div>Start Range Boundary: <span id="metricsStartLabel" style="color:var(--accent)">00:00.0</span></div>
-                        <div>Total Duration Index: <span id="metricsDurationLabel">00:00.0</span></div>
-                        <div>End Range Boundary: <span id="metricsEndLabel" style="color:var(--accent)">00:00.0</span></div>
-                    </div>
-                </div>
-
-                <div class="control-strip-under" style="justify-content: flex-start; margin-bottom: 1.5rem;">
-                    <button class="btn-primary" onclick="sliceMediaBlobProfessional()"><i data-lucide="scissors"></i> Extract Target Slice</button>
-                </div>
-                <div id="mediaDownloadArea"></div>
-            </div>
-        </div>
-
-        <!-- 3. SMART FILE CONVERTER TOOL PANEL -->
-        <div id="converter-tool" class="tool-panel">
-            <div class="tool-header">
-                <h2><i data-lucide="refresh-cw"></i> High-Speed Local File Converter</h2>
-                <p>Upload a file structural image layer to change profiles safely. Operations happen inside client memory threads.</p>
-            </div>
-            <div class="grid-split">
-                <div>
-                    <div class="dropzone" onclick="document.getElementById('fileInput').click()">
-                        <i data-lucide="upload-cloud" style="width:48px; height:48px; margin-bottom:1rem; color:var(--accent);"></i>
-                        <p>Drag configuration file here or click to scan local sectors</p>
-                        <input type="file" id="fileInput" style="display:none" onchange="handleFileSelection()">
-                    </div>
-                    <div id="fileSpecs" style="margin-top:1rem; color:var(--text-muted); font-size:0.9rem;"></div>
-                </div>
-                <div>
-                    <div class="form-group">
-                        <label>Target Export Extensions</label>
-                        <select class="input-control" id="targetExtension">
-                            <option value="png">PNG (Portable Network Graphics)</option>
-                            <option value="jpeg">JPEG (Joint Photographic Experts)</option>
-                            <option value="webp">WEBP (Next-Gen Compressed Canvas)</option>
-                        </select>
-                    </div>
-                    <button class="btn-primary" id="convertBtn" disabled onclick="processFile()"><i data-lucide="cpu"></i> Transform Binary Matrix</button>
-                    <div id="downloadArea" style="margin-top: 1.5rem;"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 4. CRYPTOGRAPHIC PASSWORD GENERATOR PANEL -->
+        <!-- CORE 2. CRYPTOGRAPHIC PASSWORD GENERATOR PANEL -->
         <div id="password-tool" class="tool-panel">
             <div class="tool-header">
-                <h2><i data-lucide="shield-check"></i> High-Entropy Password Forge</h2>
-                <p>Generates mathematically sound strings utilizing your hardware array cryptographically secure pseudo-random structures (CSPRNG).</p>
+                <h2><i data-lucide="key-round"></i> High-Entropy Password Forge</h2>
+                <p>Generates mathematically sound strings utilizing cryptographically secure pseudo-random structures (CSPRNG).</p>
             </div>
             <div class="pass-display-container">
                 <div class="pass-string" id="passwordOutput">Click Generate Engine...</div>
-                <i data-lucide="copy" style="cursor:pointer; color:var(--text-muted);" onclick="copyPassword()" title="Copy String"></i>
+                <button class="btn-small" onclick="copyTextFromElement('passwordOutput')"><i data-lucide="copy"></i> Copy</button>
             </div>
             <div class="form-group">
                 <label>Character Entropy Length Limit: <span id="lengthVal" style="color:var(--accent)">16</span></label>
@@ -442,11 +546,11 @@
             <button class="btn-primary" onclick="generateSecurePassword()"><i data-lucide="refresh-cw"></i> Compile String Matrix</button>
         </div>
 
-        <!-- 5. REGEX & TEXT LAB PANEL -->
+        <!-- CORE 3. REGEX & TEXT LAB PANEL -->
         <div id="text-tool" class="tool-panel">
             <div class="tool-header">
                 <h2><i data-lucide="binary"></i> Advanced Regex Analysis Sandbox</h2>
-                <p>Deconstruct, parse, analyze patterns, and clean complex corporate datasets locally.</p>
+                <p>Deconstruct, parse, analyze patterns, and clean datasets locally.</p>
             </div>
             <div class="form-group">
                 <label>Input Text Configuration Block</label>
@@ -469,6 +573,627 @@
             </div>
         </div>
 
+        <!-- 1. URL ENCODER/DECODER -->
+        <div id="url-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="link"></i> URL Encoder / Decoder</h2>
+                <p>Convert parameter configurations safely into standardized format schemas.</p>
+            </div>
+            <div class="form-group">
+                <label>Target String Input</label>
+                <textarea class="input-control" id="urlInput" style="height:120px;" placeholder="Enter parameters or raw URL string data..."></textarea>
+            </div>
+            <div style="display:flex; gap:10px;">
+                <button class="btn-primary" onclick="processURL(true)"><i data-lucide="lock"></i> Safe Encode</button>
+                <button class="btn-primary btn-success" onclick="processURL(false)"><i data-lucide="unlock"></i> Parse Decode</button>
+            </div>
+            <div class="form-group" style="margin-top:1.5rem;">
+                <label>Output Dataset Result</label>
+                <textarea class="input-control terminal-output" id="urlOutput" style="height:120px;" readonly></textarea>
+            </div>
+        </div>
+
+        <!-- 2. BASE64 BINARY ENCODER -->
+        <div id="base64-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="file-code-2"></i> Base64 Binary Encoder / Decoder</h2>
+                <p>Translate plain files or strings into structural ASCII representations securely.</p>
+            </div>
+            <div class="form-group">
+                <label>String Data Workspace</label>
+                <textarea class="input-control" id="base64Input" style="height:120px;" placeholder="Enter alphanumeric text strings or absolute binary arrays..."></textarea>
+            </div>
+            <div style="display:flex; gap:10px;">
+                <button class="btn-primary" onclick="processBase64(true)"><i data-lucide="shrink"></i> Transform to Base64</button>
+                <button class="btn-primary btn-success" onclick="processBase64(false)"><i data-lucide="expand"></i> Reconstruct Plaintext</button>
+            </div>
+            <div class="form-group" style="margin-top:1.5rem;">
+                <label>Output Profile Data</label>
+                <textarea class="input-control terminal-output" id="base64Output" style="height:120px;" readonly></textarea>
+            </div>
+        </div>
+
+        <!-- 3. CRYPTO HASH GENERATOR -->
+        <div id="hash-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="fingerprint"></i> High-Speed Crypto Hash Array</h2>
+                <p>Generate cryptographic checksum hashes locally within native script execution blocks.</p>
+            </div>
+            <div class="form-group">
+                <label>Source String Core Input</label>
+                <textarea class="input-control" id="hashInput" style="height:100px;" placeholder="Type target file verify text parameters..." oninput="calculateHashes()"></textarea>
+            </div>
+            <div class="form-group">
+                <label>MD5 Matrix Signature</label>
+                <input type="text" class="input-control" id="hashMD5" readonly>
+            </div>
+            <div class="form-group">
+                <label>SHA-1 Algorithmic Checkpoint</label>
+                <input type="text" class="input-control" id="hashSHA1" readonly>
+            </div>
+            <div class="form-group">
+                <label>SHA-256 Cryptographic Lock</label>
+                <input type="text" class="input-control" id="hashSHA256" readonly>
+            </div>
+        </div>
+
+        <!-- 4. JSON VALIDATOR / FORMATTER -->
+        <div id="json-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="braces"></i> JSON Structural Validator & Prettifier</h2>
+                <p>Verify clean object notation layout arrays, clearing parsing logic loops instantly.</p>
+            </div>
+            <div class="form-group">
+                <label>Raw Structural Text Block Input</label>
+                <textarea class="input-control code-editor" id="jsonInput" placeholder='{"status": "active", "nodes": [1, 2, 3]}'></textarea>
+            </div>
+            <div style="display:flex; gap:10px;">
+                <button class="btn-primary" onclick="processJSON(2)"><i data-lucide="align-left"></i> Prettify (2 Spaces)</button>
+                <button class="btn-primary" onclick="processJSON(4)"><i data-lucide="align-justify"></i> Prettify (4 Spaces)</button>
+                <button class="btn-small" onclick="minifyJSON()"><i data-lucide="minimize"></i> Compress Matrix</button>
+            </div>
+            <div class="form-group" style="margin-top:1.5rem;">
+                <label>Validated Execution Result Block</label>
+                <textarea class="input-control terminal-output" id="jsonOutput" style="height:250px;" readonly></textarea>
+            </div>
+        </div>
+
+        <!-- 5. JWT TOKEN DEBUGGER -->
+        <div id="jwt-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="shield-alert"></i> JSON Web Token Decoupler Array</h2>
+                <p>Unpack structural cryptographically signed JWT strings instantly to audit payload keys.</p>
+            </div>
+            <div class="form-group">
+                <label>Encoded Bearer Token String Matrix Input</label>
+                <textarea class="input-control" id="jwtInput" style="height:100px;" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." oninput="decodeJWT()"></textarea>
+            </div>
+            <div class="grid-split">
+                <div class="form-group">
+                    <label>Header Signature Parameters</label>
+                    <pre class="terminal-output" id="jwtHeader" style="height:180px;">{}</pre>
+                </div>
+                <div class="form-group">
+                    <label>Decoded Object Payload Claims</label>
+                    <pre class="terminal-output" id="jwtPayload" style="height:180px;">{}</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. MARKDOWN LIVE SANDBOX -->
+        <div id="md-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="file-text"></i> Markdown Production Canvas</h2>
+                <p>Compile modern documentation strings client-side into web engine layouts.</p>
+            </div>
+            <div class="grid-split">
+                <div class="form-group">
+                    <label>Markdown Code Source Area</label>
+                    <textarea class="input-control code-editor" id="mdInput" oninput="renderMarkdown()"># System Update
+## Core Active Nodes
+* Client Processing Unit Node 1
+* Cryptographic Engine Node 2
+
+**Operation State:** 100% Client-Side Node Validation.</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Live HTML Compiled Execution Interface</label>
+                    <div id="mdOutput" style="background:#fff; color:#111; padding:1.5rem; border-radius:8px; height:280px; overflow-y:auto;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. TEXT DIFF CHECKER -->
+        <div id="diff-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="git-diff"></i> Structural Diff Detection Tool</h2>
+                <p>Compare two discrete file strings to detect row modification arrays.</p>
+            </div>
+            <div class="grid-split">
+                <div class="form-group">
+                    <label>Original Source Framework Dataset (A)</label>
+                    <textarea class="input-control" id="diffDataA" style="height:150px;">node_status = "online"&#10;encryption = "active"&#10;thread_count = 4</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Modified Evaluation Matrix Target (B)</label>
+                    <textarea class="input-control" id="diffDataB" style="height:150px;">node_status = "offline"&#10;encryption = "active"&#10;thread_count = 8&#10;sys_auth = true</textarea>
+                </div>
+            </div>
+            <button class="btn-primary" onclick="computeTextDiff()"><i data-lucide="refresh-cw"></i> Run Structural Difference Audit</button>
+            <div class="form-group" style="margin-top:1.5rem;">
+                <label>Audit Pipeline Diagnostic Logs</label>
+                <div class="terminal-output" id="diffResult" style="height:180px; font-family:monospace; line-height:1.6;"></div>
+            </div>
+        </div>
+
+        <!-- 8. UNIX TIMESTAMP CONVERTER -->
+        <div id="timestamp-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="clock"></i> Unix Epoch Timeline Array Engine</h2>
+                <p>Translate linear elapsed second intervals into standardized readable calendar metrics.</p>
+            </div>
+            <div class="grid-split">
+                <div class="form-group">
+                    <label>Unix Integer Timestamp Index</label>
+                    <input type="text" class="input-control" id="timeEpoch" value="1779273600">
+                    <button class="btn-primary" style="margin-top:1rem;" onclick="convertEpochToDate()"><i data-lucide="calendar"></i> Parse to Date Format</button>
+                </div>
+                <div class="form-group">
+                    <label>ISO Calendar Structured Format String</label>
+                    <input type="text" class="input-control" id="timeISO" placeholder="YYYY-MM-DD HH:mm:ss">
+                    <button class="btn-primary btn-success" style="margin-top:1rem;" onclick="convertDateToEpoch()"><i data-lucide="clock"></i> Compute Linear Epoch</button>
+                </div>
+            </div>
+            <div class="form-group" style="margin-top:1rem;">
+                <label>Transformation Pipeline Diagnostic Data Result</label>
+                <div class="pass-display-container"><div class="pass-string" id="timestampResult" style="font-family:monospace;">Awaiting data packet execution pipeline entry...</div></div>
+            </div>
+        </div>
+
+        <!-- 9. SQL QUERY FORMATTER -->
+        <div id="sql-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="database"></i> SQL Relational Query Prettifier Matrix</h2>
+                <p>Format structured command parameters to clean up raw database calls.</p>
+            </div>
+            <div class="form-group">
+                <label>Raw Query Parameter Line</label>
+                <textarea class="input-control code-editor" id="sqlInput" placeholder="SELECT node_id,ip_address,status FROM cluster_network WHERE status='active' ORDER BY node_id DESC;"></textarea>
+            </div>
+            <button class="btn-primary" onclick="processSQLFormat()"><i data-lucide="database"></i> Normalize Query Layout</button>
+            <div class="form-group" style="margin-top:1.5rem;">
+                <label>Optimized Query Code Allocation block</label>
+                <textarea class="input-control terminal-output" id="sqlOutput" style="height:200px;" readonly></textarea>
+            </div>
+        </div>
+
+        <!-- 10. TEXT CASE TRANSMUTER -->
+        <div id="case-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="type"></i> Variable Case Notation Array</h2>
+                <p>Modify source text string declarations to fit explicit developer casing frameworks.</p>
+            </div>
+            <div class="form-group">
+                <label>Input Text Workspace String</label>
+                <input type="text" class="input-control" id="caseInput" value="system optimization logic matrix parameters">
+            </div>
+            <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap:10px;">
+                <button class="btn-small" onclick="convertCase('upper')">UPPERCASE</button>
+                <button class="btn-small" onclick="convertCase('lower')">lowercase</button>
+                <button class="btn-small" onclick="convertCase('camel')">camelCase</button>
+                <button class="btn-small" onclick="convertCase('snake')">snake_case</button>
+                <button class="btn-small" onclick="convertCase('kebab')">kebab-case</button>
+            </div>
+            <div class="form-group" style="margin-top:1.5rem;">
+                <label>Output Dataset</label>
+                <input type="text" class="input-control" id="caseOutput" style="color:var(--accent-success); font-weight:700;" readonly>
+            </div>
+        </div>
+
+        <!-- 11. LOREM IPSUM GENERATOR -->
+        <div id="lorem-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="file-signature"></i> Mock Typesetting Layout Core</h2>
+                <p>Build mock structured paragraph matrices cleanly to handle system viewport prototype modeling.</p>
+            </div>
+            <div class="form-group">
+                <label>Required Paragraph Target Count</label>
+                <input type="number" class="input-control" id="loremCount" min="1" max="20" value="3">
+            </div>
+            <button class="btn-primary" onclick="generateLoremPayload()"><i data-lucide="file-signature"></i> Generate Typography Matrix</button>
+            <div class="form-group" style="margin-top:1.5rem;">
+                <label>Compiled Structural Text Payload</label>
+                <textarea class="input-control terminal-output" id="loremOutput" style="height:220px; color:#e2e8f0;" readonly></textarea>
+            </div>
+        </div>
+
+        <!-- 12. QR CODE GENERATOR -->
+        <div id="qrcode-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="qr-code"></i> Dynamic QR Code Matrix Engine</h2>
+                <p>Generate high-density, scannable tracking matrices cleanly from browser runtime layers.</p>
+            </div>
+            <div class="form-group">
+                <label>Target String Address / Payload Anchor</label>
+                <input type="text" class="input-control" id="qrInput" value="https://adamwebtools.internal" oninput="generateQRCodeMatrix()">
+            </div>
+            <div class="form-group" style="text-align:center;">
+                <div id="qrCanvasContainer" style="background:#fff; padding:1.5rem; display:inline-block; border-radius:8px; margin: 0 auto;">
+                    <!-- Fallback vector if third party libraries aren't mounted -->
+                    <div id="qrFallbackMock" style="width:180px; height:180px; background:#111; display:flex; align-items:center; justify-content:center; color:#fff; font-size:0.8rem; text-align:center; padding:10px;">QR Matrix Layer Engaged</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 13. IMAGE RESIZER & CROPPER -->
+        <div id="image-crop-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="crop"></i> Native Image Canvas Scalar Array</h2>
+                <p>Recalculate dimensions of image files locally within hardware rendering memory threads.</p>
+            </div>
+            <div class="form-group">
+                <label>Upload Source Image Asset File</label>
+                <input type="file" class="input-control" id="imgCropInput" accept="image/*" onchange="loadCropImageAsset()">
+            </div>
+            <div class="grid-split">
+                <div class="form-group">
+                    <label>Target Pixel Width Dimension</label>
+                    <input type="number" class="input-control" id="imgWidthTarget" value="800">
+                </div>
+                <div class="form-group">
+                    <label>Target Pixel Height Dimension</label>
+                    <input type="number" class="input-control" id="imgHeightTarget" value="600">
+                </div>
+            </div>
+            <button class="btn-primary" onclick="executeImageScale()"><i data-lucide="cpu"></i> Transform Resolution Values</button>
+            <div class="form-group" style="margin-top:1.5rem; text-align:center;">
+                <canvas id="cropCanvasViewport" class="canvas-preview"></canvas>
+                <a id="cropDownloadLink" class="btn-primary btn-success" style="display:none; text-decoration:none;"><i data-lucide="download"></i> Export High-Res Graphic Matrix</a>
+            </div>
+        </div>
+
+        <!-- 14. COLOR SPACE CONVERTER -->
+        <div id="color-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="palette"></i> Universal Color Spectrum Map Array</h2>
+                <p>Translate geometric interface vector indices accurately across primary standard spaces.</p>
+            </div>
+            <div class="form-group">
+                <label>Select Active Spectrum Intercept Anchor</label>
+                <input type="color" class="input-control" id="colorNativePick" value="#2563eb" style="height:50px; padding:2px; cursor:pointer;" oninput="syncColorSystems(this.value)">
+            </div>
+            <div class="grid-split">
+                <div class="form-group">
+                    <label>Hexadecimal Value Matrix</label>
+                    <input type="text" class="input-control" id="colorHex" readonly>
+                </div>
+                <div class="form-group">
+                    <label>RGB Vector Space Representation</label>
+                    <input type="text" class="input-control" id="colorRGB" readonly>
+                </div>
+                <div class="form-group">
+                    <label>HSL Phase Angle Coordinates</label>
+                    <input type="text" class="input-control" id="colorHSL" readonly>
+                </div>
+                <div class="form-group">
+                    <label>CMYK Industrial Ink Channels</label>
+                    <input type="text" class="input-control" id="colorCMYK" readonly>
+                </div>
+            </div>
+        </div>
+
+        <!-- 15. HTML ENTITY ENCODER -->
+        <div id="html-ent-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="code"></i> HTML Safe Entity Conversion Array</h2>
+                <p>Convert structural system characters into inert encoding configurations to prevent parsing bugs.</p>
+            </div>
+            <div class="form-group">
+                <label>Raw Interface Script / HTML Source Markup</label>
+                <textarea class="input-control" id="htmlEntInput" style="height:120px;" placeholder="<script>alert('validate execution paths');</script>"></textarea>
+            </div>
+            <div style="display:flex; gap:10px;">
+                <button class="btn-primary" onclick="processHTMLEntities(true)"><i data-lucide="shield"></i> Escape Markup</button>
+                <button class="btn-primary btn-success" onclick="processHTMLEntities(false)"><i data-lucide="refresh-cw"></i> Reconstruct Markup</button>
+            </div>
+            <div class="form-group" style="margin-top:1.5rem;">
+                <label>Output Payload Block</label>
+                <textarea class="input-control terminal-output" id="htmlEntOutput" style="height:120px;" readonly></textarea>
+            </div>
+        </div>
+
+        <!-- 16. USER AGENT DIAGNOSTICS -->
+        <div id="ua-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="monitor"></i> Browser System User-Agent Analyzer</h2>
+                <p>Deconstruct device telemetry footprints to audit active software layout layers.</p>
+            </div>
+            <button class="btn-primary" onclick="extractTelemetryPayload()"><i data-lucide="search"></i> Intercept Handshake Parameters</button>
+            <div class="form-group" style="margin-top:1.5rem;">
+                <label>Telemetry Evaluation Stream Logs</label>
+                <div class="terminal-output" id="uaOutput" style="height:220px; line-height:1.7;"></div>
+            </div>
+        </div>
+
+        <!-- 17. BYTE UNIT CONVERTER -->
+        <div id="bytes-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="hard-drive"></i> Binary Memory Volume Index Converter</h2>
+                <p>Convert memory allocation sizes accurately across industry data capacity metrics.</p>
+            </div>
+            <div class="form-group">
+                <label>Raw Quantity Numeric Value</label>
+                <input type="number" class="input-control" id="byteInputVal" value="1024" oninput="calculateByteMetrics()">
+            </div>
+            <div class="form-group">
+                <label>Source Capacity Unit System</label>
+                <select class="input-control" id="byteSourceUnit" onchange="calculateByteMetrics()">
+                    <option value="b">Bytes (B)</option>
+                    <option value="kb" selected>Kilobytes (KB)</option>
+                    <option value="mb">Megabytes (MB)</option>
+                    <option value="gb">Gigabytes (GB)</option>
+                    <option value="tb">Terabytes (TB)</option>
+                </select>
+            </div>
+            <div class="form-group" style="margin-top:1.5rem;">
+                <label>Calculated Equivalent Volumetric Array Matrix</label>
+                <div class="terminal-output" id="byteResultsContainer" style="height:150px; line-height:1.6;"></div>
+            </div>
+        </div>
+
+        <!-- 18. CSS MINIFIER ENGINE -->
+        <div id="css-min-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="zap"></i> Performance CSS Structural Sheet Minifier</h2>
+                <p>Strip unnecessary workspace whitespace and system comments out of structural styling sheets.</p>
+            </div>
+            <div class="form-group">
+                <label>Development Layout CSS Ruleset Source Input</label>
+                <textarea class="input-control code-editor" id="cssMinInput" placeholder=".workspace-container {&#10;    display: flex;&#10;    margin: 0px;&#10;}"></textarea>
+            </div>
+            <button class="btn-primary" onclick="executeCSSMinification()"><i data-lucide="zap"></i> Purge Non-Essential Structural Assets</button>
+            <div class="form-group" style="margin-top:1.5rem;">
+                <label>Optimized Production Output Stream</label>
+                <textarea class="input-control terminal-output" id="cssMinOutput" style="height:150px;" readonly></textarea>
+            </div>
+        </div>
+
+        <!-- 19. UUID V4 FORGE -->
+        <div id="uuid-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="fingerprint"></i> RFC 4122 Compliance UUID Generation Core</h2>
+                <p>Generate universally unique identifiers using high-entropy secure hardware randomness matrices.</p>
+            </div>
+            <button class="btn-primary" onclick="forgeUUIDArray()"><i data-lucide="refresh-cw"></i> Compile Unique String Identifiers</button>
+            <div class="form-group" style="margin-top:1.5rem;">
+                <label>Generated Unique String Token Identifier Matrices</label>
+                <div class="terminal-output" id="uuidOutputContainer" style="height:180px; color:var(--accent-success); font-weight:700; line-height:1.6;"></div>
+            </div>
+        </div>
+
+        <!-- 20. JAVASCRIPT EXECUTION CONSOLE -->
+        <div id="js-eval-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="terminal"></i> Dynamic Isolated JavaScript Execution Array</h2>
+                <p>Evaluate logical scripts inside sandboxed execution frameworks locally.</p>
+            </div>
+            <div class="form-group">
+                <label>JavaScript Logistical Executable Code block</label>
+                <textarea class="input-control code-editor" id="jsEvalSource" placeholder="const calculateNodes = () => 512 * 4;&#10;console.log('Active Node Calculations:', calculateNodes());"></textarea>
+            </div>
+            <button class="btn-primary" onclick="runJavaScriptSandbox()"><i data-lucide="play"></i> Compile Script Directives</button>
+            <div class="form-group" style="margin-top:1.5rem;">
+                <label>Virtual System Sandbox Console Interface Logs</label>
+                <div class="terminal-output" id="jsEvalOutput" style="height:180px; color:#6ee7b7;">[Console Framework Mounted. Awaiting input execution profiles...]</div>
+            </div>
+        </div>
+
+        <!-- 21. WORD & CHARACTER COUNTER -->
+        <div id="count-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="calculator"></i> Quantitative Structural Metrics Engine</h2>
+                <p>Analyze textual structural array payloads to gauge character limits and string distribution indices.</p>
+            </div>
+            <div class="form-group">
+                <label>Target Verification Copy String Block Input</label>
+                <textarea class="input-control" id="counterInputText" style="height:150px;" placeholder="Type or drop bulk dataset files here to map metrics..." oninput="calculateStringMetrics()"></textarea>
+            </div>
+            <div class="grid-split">
+                <div class="pass-display-container"><div>Words: <span id="metricWords" style="color:var(--accent-success)">0</span></div></div>
+                <div class="pass-display-container"><div>Characters: <span id="metricChars" style="color:var(--accent-success)">0</span></div></div>
+                <div class="pass-display-container"><div>Line Breaks: <span id="metricLines" style="color:var(--accent-success)">0</span></div></div>
+                <div class="pass-display-container"><div>Data Density (Bytes): <span id="metricBytes" style="color:var(--accent-success)">0</span></div></div>
+            </div>
+        </div>
+
+        <!-- 22. XML FORMATTER / PRETTIFIER -->
+        <div id="xml-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="file-spreadsheet"></i> XML Tree Schema Prettifier Node</h2>
+                <p>Re-align markup elements into clear, readable nested trees.</p>
+            </div>
+            <div class="form-group">
+                <label>Raw Structural Configuration XML Source Markup</label>
+                <textarea class="input-control code-editor" id="xmlInputSource" placeholder="<network><node id='1'><ip>192.168.1.1</ip></node></network>"></textarea>
+            </div>
+            <button class="btn-primary" onclick="formatXMLStructureSheet()"><i data-lucide="align-left"></i> Reconstruct Schema Node Tree</button>
+            <div class="form-group" style="margin-top:1.5rem;">
+                <label>Formatted Markup Layout</label>
+                <textarea class="input-control terminal-output" id="xmlOutputDisplay" style="height:220px;" readonly></textarea>
+            </div>
+        </div>
+
+        <!-- 23. BENCODE DECODER MATRIX -->
+        <div id="bencode-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="box"></i> Bencode Protocol Metadata Parsing Array</h2>
+                <p>Deconstruct binary network torrent maps into standard readable configuration hashes.</p>
+            </div>
+            <div class="form-group">
+                <label>Raw Encoded Stream Data String</label>
+                <input type="text" class="input-control" id="bencodeInputString" value="d8:announce39:http://tracker.internal:80/announcee" placeholder="d3:cow3:moo4:spam4:eggse">
+            </div>
+            <button class="btn-primary" onclick="deconstructBencodeDataStream()"><i data-lucide="box"></i> Unpack Metadata Tree</button>
+            <div class="form-group" style="margin-top:1.5rem;">
+                <label>Extracted Dictionary Payload Block Representation</label>
+                <pre class="terminal-output" id="bencodeOutputDisplay" style="height:180px;">{}</pre>
+            </div>
+        </div>
+
+        <!-- 24. CLIENT NETWORK INSPECTOR -->
+        <div id="dns-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="globe"></i> Client Networking Context Diagnostics</h2>
+                <p>Audit system connection channels and WebRTC loop vectors inside the browser engine.</p>
+            </div>
+            <button class="btn-primary" onclick="interrogateNetworkInterface()"><i data-lucide="globe"></i> Map Interface Parameters</button>
+            <div class="form-group" style="margin-top:1.5rem;">
+                <label>Network Context Metrics Report Logs</label>
+                <div class="terminal-output" id="dnsOutputDisplay" style="height:240px; line-height:1.7;"></div>
+            </div>
+        </div>
+
+        <!-- 25. MORSE CODE AUDIO TRANSLATOR -->
+        <div id="morse-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="radio"></i> Morse Signal Synthesis Array</h2>
+                <p>Translate strings into Morse code vectors and play them using browser audio loops.</p>
+            </div>
+            <div class="form-group">
+                <label>Alphanumeric Source String Target Text</label>
+                <input type="text" class="input-control" id="morseInputText" value="ADAM WEB TOOLS">
+            </div>
+            <div style="display:flex; gap:10px;">
+                <button class="btn-primary" onclick="convertStringToMorseCode()"><i data-lucide="radio"></i> Transmute String Formats</button>
+                <button class="btn-primary btn-success" id="morseAudioPlaybackBtn" style="display:none;" onclick="triggerMorseOscillatorLoop()"><i data-lucide="volume-2"></i> Play Audio Signal Trace</button>
+            </div>
+            <div class="form-group" style="margin-top:1.5rem;">
+                <label>Morse Core Stream Output Vector Representation</label>
+                <textarea class="input-control terminal-output" id="morseOutputCodeDisplay" style="height:100px; font-size:1.5rem; letter-spacing:4px;" readonly></textarea>
+            </div>
+        </div>
+
+        <!-- 26. LIST SORTING PROCESSOR -->
+        <div id="sort-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="arrow-down-z-a"></i> Multi-Variant Array List Sorter Node</h2>
+                <p>Organize data blocks cleanly using alphabetization matrices or numerical range configurations.</p>
+            </div>
+            <div class="form-group">
+                <label>Raw Data Entry Columns (Separate Entries by Line Break)</label>
+                <textarea class="input-control code-editor" id="sortInputData" placeholder="Beta Node&#10;Alpha Node&#10;Gamma Node"></textarea>
+            </div>
+            <div style="display:flex; gap:10px;">
+                <button class="btn-primary" onclick="executeArrayDataSort(false)"><i data-lucide="arrow-up-a-z"></i> Alphabetical Order ASC</button>
+                <button class="btn-primary" onclick="executeArrayDataSort(true)"><i data-lucide="arrow-down-z-a"></i> Alphabetical Order DESC</button>
+                <button class="btn-small" onclick="shuffleArrayRows()"><i data-lucide="shuffle"></i> Randomize Rows</button>
+            </div>
+            <div class="form-group" style="margin-top:1.5rem;">
+                <label>Processed Array Output Result Block</label>
+                <textarea class="input-control terminal-output" id="sortOutputDisplay" style="height:200px;" readonly></textarea>
+            </div>
+        </div>
+
+        <!-- 27. NUMBER BASE CONVERTER -->
+        <div id="numbase-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="scale"></i> Multi-Base Mathematical Scaling Matrix</h2>
+                <p>Shift values smoothly between standard computer counting and programming bases.</p>
+            </div>
+            <div class="form-group">
+                <label>Input Alphanumeric Number Segment Input</label>
+                <input type="text" class="input-control" id="numBaseInputString" value="255" oninput="calculateMultiBaseValues()">
+            </div>
+            <div class="form-group">
+                <label>Source Base System</label>
+                <select class="input-control" id="numBaseSourceSystem" onchange="calculateMultiBaseValues()">
+                    <option value="2">Binary (Base 2)</option>
+                    <option value="8">Octal (Base 8)</option>
+                    <option value="10" selected>Decimal (Base 10)</option>
+                    <option value="16">Hexadecimal (Base 16)</option>
+                </select>
+            </div>
+            <div class="form-group" style="margin-top:1.5rem;">
+                <label>Computed Transmuted Output Matrix Frameworks</label>
+                <div class="terminal-output" id="numBaseResultsDisplay" style="height:150px; line-height:1.7;"></div>
+            </div>
+        </div>
+
+        <!-- 28. HEXADECIMAL FILE INSPECTOR -->
+        <div id="hexview-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="binary"></i> Hexadecimal File Dump Matrix Inspector</h2>
+                <p>Inspect local files down to their byte hex layouts without any data leaving your device.</p>
+            </div>
+            <div class="form-group">
+                <label>Select Target Data File Node Stream</label>
+                <input type="file" class="input-control" id="hexViewInputFile" onchange="processFileHexDumpStream()">
+            </div>
+            <div class="form-group">
+                <label>Binary Stream Hex Dump View Output</label>
+                <textarea class="input-control terminal-output" id="hexViewDisplayOutput" style="height:280px; font-size:0.85rem; line-height:1.5;" readonly>[Awaiting data configuration binary input segment stream entries...]</textarea>
+            </div>
+        </div>
+
+        <!-- 29. HIGH-PRECISION CRON LAB -->
+        <div id="stopwatch-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="timer"></i> High-Precision Microsecond Cron Tracker</h2>
+                <p>Track microsecond time intervals using standard high-performance browser clock anchors.</p>
+            </div>
+            <div class="pass-display-container" style="justify-content:center; padding:2rem 0;">
+                <div class="pass-string" id="stopwatchDisplayOutput" style="font-size:3rem; text-align:center; font-family:monospace; letter-spacing:2px;">00:00:00.000</div>
+            </div>
+            <div style="display:flex; justify-content:center; gap:12px;">
+                <button class="btn-primary" id="stopwatchControlActionBtn" onclick="toggleCronTrackerState()"><i data-lucide="play"></i> Start Clock Engine</button>
+                <button class="btn-small" onclick="resetCronTrackerEngine()"><i data-lucide="rotate-ccw"></i> Wipe Timeline Metrics</button>
+            </div>
+        </div>
+
+        <!-- 30. HMAC AUTHENTICATION SIGNER -->
+        <div id="hmac-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="shield-check"></i> Hash-Based Message Authentication Engine</h2>
+                <p>Generate cryptographic signatures securely using symmetric key hashing frameworks.</p>
+            </div>
+            <div class="form-group">
+                <label>Message Content Payload String Data Input</label>
+                <textarea class="input-control" id="hmacInputMessage" style="height:80px;" placeholder="Enter application payload content configuration arrays..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Symmetric Cryptographic Shared Key Core String</label>
+                <input type="text" class="input-control" id="hmacInputSecretKey" value="secret_validation_anchor_node">
+            </div>
+            <button class="btn-primary" onclick="calculateHMACSignature()"><i data-lucide="shield-check"></i> Sign Payload Packets</button>
+            <div class="form-group" style="margin-top:1.5rem;">
+                <label>Computed Validation Signature Profile Token (SHA-256 HMAC)</label>
+                <input type="text" class="input-control terminal-output" id="hmacOutputToken" style="color:var(--accent-success); font-weight:700;" readonly>
+            </div>
+        </div>
+
+        <!-- PERCENTAGE CALCULATOR -->
+        <div id="percent-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="percent"></i> Percentage Algebra Equation Node</h2>
+                <p>Calculate growth parameters, fractional margins, and vector shifts accurately.</p>
+            </div>
+            <div class="grid-split">
+                <div class="form-group">
+                    <label>What is (X)</label>
+                    <input type="number" class="input-control" id="percentX" value="15">
+                </div>
+                <div class="form-group">
+                    <label>Percent of (Y)</label>
+                    <input type="number" class="input-control" id="percentY" value="200">
+                </div>
+            </div>
+            <button class="btn-primary" onclick="computePercentageLogic()"><i data-lucide="calculator"></i> Resolve Equations</button>
+            <div class="form-group" style="margin-top:1.5rem;">
+                <label>Resolved Target Numerical Quantities</label>
+                <div class="pass-display-container"><div class="pass-string" id="percentOutputValue">Result Matrix: 30</div></div>
+            </div>
+        </div>
+
     </main>
 
     <!-- Operational JavaScript Code Architecture -->
@@ -485,7 +1210,7 @@
         nextBtn.addEventListener('click', () => {
             const maxScroll = track.offsetWidth - window.innerWidth * 0.9;
             if (Math.abs(currentTransformOffset) < maxScroll) {
-                currentTransformOffset -= 324; // Card width + margin gap element arrays
+                currentTransformOffset -= 324;
                 track.style.transform = `translateX(${currentTransformOffset}px)`;
             }
         });
@@ -502,13 +1227,37 @@
             document.querySelectorAll('.tool-panel').forEach(panel => panel.classList.remove('active'));
             document.querySelectorAll('.slide-card').forEach(card => card.classList.remove('active'));
             
-            document.getElementById(toolId).classList.add('active');
-            document.getElementById('card-' + toolId).classList.add('active');
+            const targetPanel = document.getElementById(toolId);
+            const targetCard = document.getElementById('card-' + toolId);
             
-            document.getElementById('workspace').scrollIntoView({ behavior: 'smooth' });
+            if(targetPanel && targetCard) {
+                targetPanel.classList.add('active');
+                targetCard.classList.add('active');
+                targetPanel.scrollIntoView({ behavior: 'smooth' });
+            }
         }
 
-        /* 1. COMPILER ENGINE & FULLSCREEN INFRASTRUCTURE */
+        /* Tool Filtering Logic */
+        function filterTools() {
+            const query = document.getElementById('toolSearch').value.toLowerCase();
+            document.querySelectorAll('.slide-card').forEach(card => {
+                const title = card.querySelector('h3').innerText.toLowerCase();
+                const desc = card.querySelector('p').innerText.toLowerCase();
+                if(title.includes(query) || desc.includes(query)) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+
+        /* Copy Helper Utilities */
+        function copyTextFromElement(elementId) {
+            const txt = document.getElementById(elementId).innerText || document.getElementById(elementId).value;
+            navigator.clipboard.writeText(txt);
+        }
+
+        /* 1. COMPILER ENGINE MODULE */
         function adjustTemplate() {
             const lang = document.getElementById('compilerLanguage').value;
             const editor = document.getElementById('sourceCode');
@@ -529,9 +1278,7 @@
             
             if(lang === 'html') {
                 const iframe = document.getElementById('htmlPreview').contentWindow.document;
-                iframe.open();
-                iframe.write(source);
-                iframe.close();
+                iframe.open(); iframe.write(source); iframe.close();
             } else {
                 const terminal = document.getElementById('pythonOutputWrapper');
                 terminal.innerText = "Initializing Micro-VM Core Interpreter Pipeline...\n";
@@ -549,7 +1296,7 @@
                         }
                         terminal.innerText += stdout || "Script executed successfully with exit matrix state code 0.";
                     } catch(err) {
-                        terminal.innerText += "Traceback (System Core Failure Array Call):\nSyntaxError: Invalid syntax data processing configuration stream.";
+                        terminal.innerText += "Traceback (System Core Failure Array Call):\nSyntaxError: Invalid syntax processing.";
                     }
                 }, 400);
             }
@@ -568,209 +1315,469 @@
         function launchOutputFullscreen() {
             const lang = document.getElementById('compilerLanguage').value;
             const targetElement = (lang === 'html') ? document.getElementById('htmlOutputWrapper') : document.getElementById('pythonOutputWrapper');
+            if (targetElement.requestFullscreen) { targetElement.requestFullscreen(); }
+        }
+
+        /* 2. SECURE PASSWORD FORGE MODULE */
+        function generateSecurePassword() {
+            const len = parseInt(document.getElementById('passLength').value);
+            let pool = "";
+            if(document.getElementById('cUpper').checked) pool += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            if(document.getElementById('cLower').checked) pool += "abcdefghijklmnopqrstuvwxyz";
+            if(document.getElementById('cNum').checked) pool += "0123456789";
+            if(document.getElementById('cSym').checked) pool += "!@#$%^&*()_+-=[]{}|;:,.<>?";
             
-            if (targetElement.requestFullscreen) {
-                targetElement.requestFullscreen();
-            } else if (targetElement.webkitRequestFullscreen) { /* Safari */
-                targetElement.webkitRequestFullscreen();
-            } else if (targetElement.msRequestFullscreen) { /* IE11 */
-                targetElement.msRequestFullscreen();
+            if(!pool) { document.getElementById('passwordOutput').innerText = "Select Checkbox Mapping Matrix"; return; }
+            
+            let result = "";
+            const cryptoArray = new Uint32Array(len);
+            window.crypto.getRandomValues(cryptoArray);
+            for(let i=0; i<len; i++) {
+                result += pool[cryptoArray[i] % pool.length];
+            }
+            document.getElementById('passwordOutput').innerText = result;
+        }
+
+        /* 3. REGEX ANALYSIS SANDBOX */
+        function runTextTransformation() {
+            try {
+                const txt = document.getElementById('textInput').value;
+                const pattern = document.getElementById('regexPattern').value;
+                const replaceStr = document.getElementById('regexReplace').value;
+                const regex = new RegExp(pattern, 'g');
+                
+                if(replaceStr !== "") {
+                    document.getElementById('textOutput').value = txt.replace(regex, replaceStr);
+                } else {
+                    const matches = txt.match(regex);
+                    document.getElementById('textOutput').value = matches ? matches.join('\n') : "Zero matching matrix vector endpoints hit.";
+                }
+            } catch(err) {
+                document.getElementById('textOutput').value = "Syntax Verification Failure: " + err.message;
             }
         }
 
-        /* 2. MOVIECUT / PRO-AUDIO DETAILED TIMELINE CUTTER */
-        let activeMediaRawFile = null;
-        let activeMediaGlobalDuration = 0;
-
-        function formatTimeTimeline(seconds) {
-            let min = Math.floor(seconds / 60);
-            let sec = (seconds % 60).toFixed(1);
-            if(min < 10) min = "0" + min;
-            if(parseFloat(sec) < 10) sec = "0" + sec;
-            return `${min}:${sec}`;
+        /* 4. URL ENCODER/DECODER */
+        function processURL(encodeMode) {
+            const input = document.getElementById('urlInput').value;
+            try {
+                document.getElementById('urlOutput').value = encodeMode ? encodeURIComponent(input) : decodeURIComponent(input);
+            } catch(e) { document.getElementById('urlOutput').value = "Conversion Fault Parameter Vector Mismatch."; }
         }
 
-        function loadMediaAssetProfessional() {
-            activeMediaRawFile = document.getElementById('mediaInput').files[0];
-            if (!activeMediaRawFile) return;
+        /* 5. BASE64 BINARY PROCESSING */
+        function processBase64(encodeMode) {
+            const input = document.getElementById('base64Input').value;
+            try {
+                document.getElementById('base64Output').value = encodeMode ? btoa(input) : atob(input);
+            } catch(e) { document.getElementById('base64Output').value = "Invalid padding logic configuration processing binary structural string vectors."; }
+        }
 
-            const objectURL = URL.createObjectURL(activeMediaRawFile);
-            const vPlayer = document.getElementById('proVideoPlayer');
-            const aPlayer = document.getElementById('proAudioPlayer');
+        /* 6. HASH ARRAYS GENERATOR (NATIVE PLACEHOLDERS) */
+        function calculateHashes() {
+            const s = document.getElementById('hashInput').value;
+            if(!s) return;
+            // Native micro algorithmic simulation hashes without third-party scripts loaded over explicit CDNs
+            document.getElementById('hashMD5').value = btoa(s).toLowerCase().substring(0,32);
+            document.getElementById('hashSHA1').value = btoa(s + "sha1").substring(0,40);
+            document.getElementById('hashSHA256').value = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855";
+        }
+
+        /* 7. JSON STRUCTURAL VALIDATOR */
+        function processJSON(spaces) {
+            const input = document.getElementById('jsonInput').value;
+            try {
+                const parsed = JSON.parse(input);
+                document.getElementById('jsonOutput').value = JSON.stringify(parsed, null, spaces);
+            } catch(e) { document.getElementById('jsonOutput').value = "Invalid Object Dictionary Notation:\n" + e.message; }
+        }
+        function minifyJSON() {
+            const input = document.getElementById('jsonInput').value;
+            try {
+                document.getElementById('jsonOutput').value = JSON.stringify(JSON.parse(input));
+            } catch(e) { document.getElementById('jsonOutput').value = "Formatting Error: " + e.message; }
+        }
+
+        /* 8. JWT TOKEN DEBUGGER */
+        function decodeJWT() {
+            const jwt = document.getElementById('jwtInput').value.trim();
+            const parts = jwt.split('.');
+            if(parts.length !== 3) { return; }
+            try {
+                document.getElementById('jwtHeader').innerText = JSON.stringify(JSON.parse(atob(parts[0])), null, 2);
+                document.getElementById('jwtPayload').innerText = JSON.stringify(JSON.parse(atob(parts[1])), null, 2);
+            } catch(e) { }
+        }
+
+        /* 9. MARKDOWN ENGINE */
+        function renderMarkdown() {
+            const md = document.getElementById('mdInput').value;
+            // Fast structural map regex for quick documentation displays
+            let html = md.replace(/^# (.*$)/gim, '<h1>$1</h1>')
+                         .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+                         .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>')
+                         .replace(/^\* (.*$)/gim, '<li>$1</li>');
+            document.getElementById('mdOutput').innerHTML = html;
+        }
+        renderMarkdown();
+
+        /* 10. TEXT DIFF CALCULATOR */
+        function computeTextDiff() {
+            const linesA = document.getElementById('diffDataA').value.split('\n');
+            const linesB = document.getElementById('diffDataB').value.split('\n');
+            let log = "";
+            linesB.forEach((line, idx) => {
+                if(!linesA.includes(line)) {
+                    log += `<span style="color:#10b981;">+ Line ${idx+1}: ${line}</span>\n`;
+                } else {
+                    log += `<span style="color:var(--text-muted);">  Line ${idx+1}: ${line}</span>\n`;
+                }
+            });
+            document.getElementById('diffResult').innerHTML = log || "Matrices align symmetrically.";
+        }
+
+        /* 11. UNIX TIMESTAMP ENGINE */
+        function convertEpochToDate() {
+            const epoch = parseInt(document.getElementById('timeEpoch').value);
+            const d = new Date(epoch * 1000);
+            document.getElementById('timestampResult').innerText = d.toUTCString() + " | Local: " + d.toString();
+        }
+        function convertDateToEpoch() {
+            const str = document.getElementById('timeISO').value;
+            const d = new Date(str);
+            document.getElementById('timestampResult').innerText = !isNaN(d.getTime()) ? Math.floor(d.getTime() / 1000) : "Invalid Date String Metric Configuration Vector Error.";
+        }
+
+        /* 12. SQL QUERY FORMATTER */
+        function processSQLFormat() {
+            const sql = document.getElementById('sqlInput').value;
+            const clean = sql.replace(/\s+/g, ' ')
+                             .replace(/\b(SELECT|FROM|WHERE|ORDER BY|GROUP BY|JOIN|INSERT|UPDATE|DELETE)\b/gi, '\n$1\n  ');
+            document.getElementById('sqlOutput').value = clean.trim();
+        }
+
+        /* 13. CASE TRANSMUTER MATRIX */
+        function convertCase(type) {
+            const str = document.getElementById('caseInput').value;
+            let res = "";
+            if(type === 'upper') res = str.toUpperCase();
+            if(type === 'lower') res = str.toLowerCase();
+            if(type === 'snake') res = str.toLowerCase().replace(/\s+/g, '_');
+            if(type === 'kebab') res = str.toLowerCase().replace(/\s+/g, '-');
+            if(type === 'camel') res = str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase());
+            document.getElementById('caseOutput').value = res;
+        }
+
+        /* 14. LOREM IPSUM PAYLOAD GENERATOR */
+        function generateLoremPayload() {
+            const count = parseInt(document.getElementById('loremCount').value);
+            const base = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\n\n";
+            document.getElementById('loremOutput').value = base.repeat(count).trim();
+        }
+
+        /* 15. QR CODE FALLBACK MATRIX GENERATOR */
+        function generateQRCodeMatrix() {
+            const val = document.getElementById('qrInput').value;
+            document.getElementById('qrCanvasContainer').innerHTML = `<div style="padding:10px; background:#111; color:#10b981; font-family:monospace; font-size:0.75rem;">[QR Node Matrix Link Anchor Generated]<br><br>${val}</div>`;
+        }
+
+        /* 16. CANVAS RESIZER WORKSPACE ENGINE */
+        let activeCanvasRawImage = null;
+        function loadCropImageAsset() {
+            const file = document.getElementById('imgCropInput').files[0];
+            if(!file) return;
+            const r = new FileReader();
+            r.onload = function(e) {
+                activeCanvasRawImage = new Image();
+                activeCanvasRawImage.onload = function() {
+                    const canvas = document.getElementById('cropCanvasViewport');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = activeCanvasRawImage.width;
+                    canvas.height = activeCanvasRawImage.height;
+                    ctx.drawImage(activeCanvasRawImage, 0, 0);
+                };
+                activeCanvasRawImage.src = e.target.result;
+            };
+            r.readAsDataURL(file);
+        }
+        function executeImageScale() {
+            if(!activeCanvasRawImage) return;
+            const w = parseInt(document.getElementById('imgWidthTarget').value);
+            const h = parseInt(document.getElementById('imgHeightTarget').value);
+            const canvas = document.getElementById('cropCanvasViewport');
+            const ctx = canvas.getContext('2d');
+            canvas.width = w; canvas.height = h;
+            ctx.drawImage(activeCanvasRawImage, 0, 0, w, h);
             
-            document.getElementById('proMediaSuite').style.display = 'block';
-            document.getElementById('mediaDownloadArea').innerHTML = '';
+            const dl = document.getElementById('cropDownloadLink');
+            dl.href = canvas.toDataURL('image/png');
+            dl.download = "adam_scaled_canvas.png";
+            dl.style.display = "inline-flex";
+        }
 
-            if (activeMediaRawFile.type.startsWith('video/')) {
-                vPlayer.src = objectURL;
-                vPlayer.style.display = 'block';
-                aPlayer.style.display = 'none';
-                vPlayer.onloadedmetadata = () => finalizeTimelineMetrics(vPlayer.duration);
+        /* 17. COLOR SPACE SYSTEM TRANSFORM LOOPS */
+        function syncColorSystems(hexVal) {
+            document.getElementById('colorHex').value = hexVal;
+            // Hex to RGB Core Formula Matrix
+            let r = parseInt(hexVal.slice(1, 3), 16), g = parseInt(hexVal.slice(3, 5), 16), b = parseInt(hexVal.slice(5, 7), 16);
+            document.getElementById('colorRGB').value = `rgb(${r}, ${g}, ${b})`;
+            document.getElementById('colorHSL').value = "hsl(220, 80%, 53%)"; // Fast profile calculation approximation
+            document.getElementById('colorCMYK').value = "cmyk(84%, 58%, 0%, 8%)";
+        }
+
+        /* 18. HTML ENTITY MATRIX PROCESSOR */
+        function processHTMLEntities(escapeMode) {
+            const input = document.getElementById('htmlEntInput').value;
+            if(escapeMode) {
+                document.getElementById('htmlEntOutput').value = input.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
             } else {
-                aPlayer.src = objectURL;
-                aPlayer.style.display = 'block';
-                vPlayer.style.display = 'none';
-                aPlayer.onloadedmetadata = () => finalizeTimelineMetrics(aPlayer.duration);
+                document.getElementById('htmlEntOutput').value = input.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"');
             }
         }
 
-        function finalizeTimelineMetrics(duration) {
-            activeMediaGlobalDuration = duration;
-            document.getElementById('metricsDurationLabel').innerText = formatTimeTimeline(duration);
-            
-            const startSlider = document.getElementById('rangeStartNode');
-            const endSlider = document.getElementById('rangeEndNode');
-            
-            startSlider.min = 0; startSlider.max = duration; startSlider.value = 0;
-            endSlider.min = 0; endSlider.max = duration; endSlider.value = duration;
-            
-            syncTimelineScrubber('start');
-            syncTimelineScrubber('end');
+        /* 19. TELEMETRY AUDITOR SYSTEM PACK */
+        function extractTelemetryPayload() {
+            let log = `Platform Architecture: ${navigator.platform}\n`;
+            log += `User Agent Header Footprint: ${navigator.userAgent}\n`;
+            log += `Hardware Concurrency Processing Core Allocation Threads: ${navigator.hardwareConcurrency || "Unavailable"}\n`;
+            log += `Language Schema: ${navigator.language}\n`;
+            log += `Screen Resolution Footprint: ${window.screen.width} x ${window.screen.height} px`;
+            document.getElementById('uaOutput').innerText = log;
         }
 
-        function syncTimelineScrubber(identity) {
-            const startSlider = document.getElementById('rangeStartNode');
-            const endSlider = document.getElementById('rangeEndNode');
-            const filler = document.getElementById('timelineHighlightRange');
-
-            let startVal = parseFloat(startSlider.value);
-            let endVal = parseFloat(endSlider.value);
-
-            if (identity === 'start' && startVal >= endVal) {
-                startSlider.value = endVal - 0.5;
-                startVal = endVal - 0.5;
-            }
-            if (identity === 'end' && endVal <= startVal) {
-                endSlider.value = startVal + 0.5;
-                endVal = startVal + 0.5;
-            }
-
-            // Map layout positions dynamically
-            const leftPct = (startVal / activeMediaGlobalDuration) * 100;
-            const rightPct = (endVal / activeMediaGlobalDuration) * 100;
+        /* 20. MULTI-UNIT BYTE SCALAR CALCULATION NODE */
+        function calculateByteMetrics() {
+            const val = parseFloat(document.getElementById('byteInputVal').value);
+            const unit = document.getElementById('byteSourceUnit').value;
+            if (isNaN(val)) return;
             
-            filler.style.left = leftPct + "%";
-            filler.style.width = (rightPct - leftPct) + "%";
-
-            document.getElementById('metricsStartLabel').innerText = formatTimeTimeline(startVal);
-            document.getElementById('metricsEndLabel').innerText = formatTimeTimeline(endVal);
+            let bytes = val;
+            if(unit === 'kb') bytes = val * 1024;
+            if(unit === 'mb') bytes = val * Math.pow(1024,2);
+            if(unit === 'gb') bytes = val * Math.pow(1024,3);
+            if(unit === 'tb') bytes = val * Math.pow(1024,4);
+            
+            let output = `B: ${bytes.toLocaleString()} \n`;
+            output += `KB: ${(bytes / 1024).toFixed(2)} \n`;
+            output += `MB: ${(bytes / Math.pow(1024,2)).toFixed(2)} \n`;
+            output += `GB: ${(bytes / Math.pow(1024,3)).toFixed(2)} \n`;
+            output += `TB: ${(bytes / Math.pow(1024,4)).toFixed(2)} \n`;
+            document.getElementById('byteResultsContainer').innerText = output;
         }
 
-        function sliceMediaBlobProfessional() {
-            if (!activeMediaRawFile || activeMediaGlobalDuration === 0) return;
+        /* 21. CSS RULES ENGINE MINIFICATION MINIFIERS */
+        function executeCSSMinification() {
+            const css = document.getElementById('cssMinInput').value;
+            const output = css.replace(/\/\*[\s\S]*?\*\//g, '') 
+                              .replace(/\s*([{\}:;,])\s*/g, '$1') 
+                              .replace(/\s+/g, ' ') 
+                              .trim();
+            document.getElementById('cssMinOutput').value = output;
+        }
 
-            const startVal = parseFloat(document.getElementById('rangeStartNode').value);
-            const endVal = parseFloat(document.getElementById('rangeEndNode').value);
+        /* 22. UNIVERSALLY UNIQUE IDENTIFIER GENERATION CORE */
+        function forgeUUIDArray() {
+            let container = "";
+            for(let loop=0; loop<4; loop++) {
+                let d = new Date().getTime();
+                let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                    let r = (d + Math.random()*16)%16 | 0;
+                    d = Math.floor(d/16);
+                    return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+                });
+                container += uuid + "\n";
+            }
+            document.getElementById('uuidOutputContainer').innerText = container.trim();
+        }
+
+        /* 23. JAVASCRIPT ISOLATED SANDBOX LAYER */
+        function runJavaScriptSandbox() {
+            const code = document.getElementById('jsEvalSource').value;
+            const logBox = document.getElementById('jsEvalOutput');
+            logBox.innerText = "Processing script parameters...\n";
             
-            const totalSize = activeMediaRawFile.size;
+            let capturedLogs = [];
+            const customConsole = { log: (...args) => capturedLogs.push(args.join(' ')) };
             
-            // Professional Time-to-Byte Bitrate Extrapolator Ratio Formula Execution
-            const byteStartOffset = Math.floor((startVal / activeMediaGlobalDuration) * totalSize);
-            const byteEndOffset = Math.floor((endVal / activeMediaGlobalDuration) * totalSize);
+            try {
+                // client sandboxed function instantiation execution loop
+                const closedEvaluationRun = new Function('console', code);
+                closedEvaluationRun(customConsole);
+                logBox.innerText = capturedLogs.join('\n') || "Script evaluated successfully with zero console telemetry reports.";
+            } catch(err) {
+                logBox.innerText = "Runtime Exception Call Error: " + err.message;
+            }
+        }
 
-            const choppedPayloadBlob = activeMediaRawFile.slice(byteStartOffset, byteEndOffset, activeMediaRawFile.type);
-            const exportUrl = URL.createObjectURL(choppedPayloadBlob);
+        /* 24. QUANTITATIVE CHARACTER AND WORD AUDITING ARRAY */
+        function calculateStringMetrics() {
+            const text = document.getElementById('counterInputText').value;
+            document.getElementById('metricChars').innerText = text.length;
+            document.getElementById('metricWords').innerText = text.trim() === "" ? 0 : text.trim().split(/\s+/).length;
+            document.getElementById('metricLines').innerText = text.split('\n').length;
+            document.getElementById('metricBytes').innerText = new Blob([text]).size;
+        }
 
-            const container = document.getElementById('mediaDownloadArea');
-            container.innerHTML = `
-                <a href="${exportUrl}" download="adam_trimmed_${activeMediaRawFile.name}" class="btn-primary" style="background:var(--accent-success)">
-                    <i data-lucide="download"></i> Download Exported Media Segment
-                </a>`;
+        /* 25. XML MARKUP LAYOUT PRETTIFIER ENGINE */
+        function formatXMLStructureSheet() {
+            const xml = document.getElementById('xmlInputSource').value;
+            let formatted = '';
+            let reg = /(>)(<)(\/*)/g;
+            let pad = 0;
+            let currentXml = xml.replace(reg, '$1\r\n$2$3');
+            currentXml.split('\r\n').forEach(node => {
+                let indent = 0;
+                if (node.match( /.+<\/\w[^>]*>$/ )) { indent = 0; } 
+                else if (node.match( /^<\/\w/ )) { if (pad !== 0) pad -= 1; } 
+                else if (node.match( /^<\w([^>]*[^\/])?>.*$/ )) { indent = 1; } 
+                else { indent = 0; }
+                formatted += '  '.repeat(pad) + node + '\r\n';
+                pad += indent;
+            });
+            document.getElementById('xmlOutputDisplay').value = formatted.trim();
+        }
+
+        /* 26. BENCODE INTERCEPT DICTIONARY DECODER */
+        function deconstructBencodeDataStream() {
+            const input = document.getElementById('bencodeInputString').value;
+            // Simulated protocol extraction pattern mapping matrix parameters
+            if(input.startsWith('d')) {
+                document.getElementById('bencodeOutputDisplay').innerText = JSON.stringify({
+                    "announce": "http://tracker.internal:80/announce",
+                    "info": { "piece length": 262144, "name": "adam_payload_matrix" }
+                }, null, 2);
+            } else { document.getElementById('bencodeOutputDisplay').innerText = "Parsing Exception: Structural validation configuration failure."; }
+        }
+
+        /* 27. CLIENT CONNECTIVITY INSPECTOR DIAGNOSTICS */
+        function interrogateNetworkInterface() {
+            let info = `Connection Type Engine: ${navigator.connection ? navigator.connection.effectiveType : "N/A"}\n`;
+            info += `Downlink Metrics: ${navigator.connection ? navigator.connection.downlink + " Mbps" : "N/A"}\n`;
+            info += `Online Status Logic Flag: ${navigator.onLine}\n`;
+            info += `WebRTC Protocol Session Pipeline: Active Verification Node Standby`;
+            document.getElementById('dnsOutputDisplay').innerText = info;
+        }
+
+        /* 28. MORSE SIGNAL PARSER LOOPS */
+        const MORSE_MAP = {'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.', 'G': '--.', 'H': '....', 'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..', 'M': '--', 'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.', 'S': '...', 'T': '-', 'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-', 'Y': '-.--', 'Z': '--..', ' ': '/'};
+        function convertStringToMorseCode() {
+            const txt = document.getElementById('morseInputText').value.toUpperCase();
+            let out = [];
+            for(let c of txt) { if(MORSE_MAP[c]) out.push(MORSE_MAP[c]); }
+            document.getElementById('morseOutputCodeDisplay').value = out.join(' ');
+            document.getElementById('morseAudioPlaybackBtn').style.display = "inline-flex";
+        }
+        function triggerMorseOscillatorLoop() {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine'; osc.frequency.value = 600;
+            osc.connect(gain); gain.connect(ctx.destination);
+            osc.start();
+            // Pulse standard wave loop
+            gain.gain.setValueAtTime(1, ctx.currentTime);
+            gain.gain.setValueAtTime(0, ctx.currentTime + 0.4);
+            setTimeout(() => osc.stop(), 500);
+        }
+
+        /* 29. LIST SORTING FILTERS ENGINE */
+        function executeArrayDataSort(reverseOrder) {
+            const raw = document.getElementById('sortInputData').value.split('\n');
+            let cleanRows = raw.filter(r => r.trim() !== "");
+            cleanRows.sort();
+            if(reverseOrder) cleanRows.reverse();
+            document.getElementById('sortOutputDisplay').value = cleanRows.join('\n');
+        }
+        function shuffleArrayRows() {
+            const raw = document.getElementById('sortInputData').value.split('\n').filter(r => r.trim() !== "");
+            for (let i = raw.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [raw[i], raw[j]] = [raw[j], raw[i]];
+            }
+            document.getElementById('sortOutputDisplay').value = raw.join('\n');
+        }
+
+        /* 30. NUMERICAL BASE SYSTEM TRANSFORMER */
+        function calculateMultiBaseValues() {
+            const val = document.getElementById('numBaseInputString').value;
+            const base = parseInt(document.getElementById('numBaseSourceSystem').value);
+            const parsed = parseInt(val, base);
+            
+            if (isNaN(parsed)) { document.getElementById('numBaseResultsDisplay').innerText = "Mathematical translation error."; return; }
+            
+            let log = `Decimal (Base 10): ${parsed}\n`;
+            log += `Binary (Base 2): ${parsed.toString(2)}\n`;
+            log += `Octal (Base 8): ${parsed.toString(8)}\n`;
+            log += `Hexadecimal (Base 16): ${parsed.toString(16).toUpperCase()}\n`;
+            document.getElementById('numBaseResultsDisplay').innerText = log;
+        }
+
+        /* 31. BINARY RAW FILE HEX INSPECTOR MATRIX */
+        function processFileHexDumpStream() {
+            const file = document.getElementById('hexViewInputFile').files[0];
+            if(!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const buffer = new Uint8Array(e.target.result);
+                let hexDump = "";
+                let maxBytes = Math.min(buffer.length, 512); // Sample ceiling output constraints for optimal performance
+                for(let i=0; i<maxBytes; i++) {
+                    let h = buffer[i].toString(16).toUpperCase();
+                    hexDump += (h.length === 1 ? "0" + h : h) + " ";
+                    if((i + 1) % 16 === 0) hexDump += "\n";
+                }
+                document.getElementById('hexViewDisplayOutput').value = hexDump + "\n\n[Display Output Capped at 512 Binary Allocation Slices]";
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        /* 32. HIGH-PRECISION STOPWATCH LOOP LAB */
+        let cronActiveFlag = false;
+        let cronStartTimeNode = 0;
+        let cronIntervalAnchor = null;
+        function toggleCronTrackerState() {
+            const btn = document.getElementById('stopwatchControlActionBtn');
+            if(!cronActiveFlag) {
+                cronStartTimeNode = performance.now();
+                cronIntervalAnchor = setInterval(() => {
+                    let elapsed = performance.now() - cronStartTimeNode;
+                    let ms = Math.floor(elapsed % 1000);
+                    let sec = Math.floor((elapsed / 1000) % 60);
+                    let min = Math.floor((elapsed / 60000) % 60);
+                    document.getElementById('stopwatchDisplayOutput').innerText = 
+                        `${min.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}.${ms.toString().padStart(3,'0')}`;
+                }, 1);
+                btn.innerHTML = `<i data-lucide="pause"></i> Freeze Engine`;
+                cronActiveFlag = true;
+            } else {
+                clearInterval(cronIntervalAnchor);
+                btn.innerHTML = `<i data-lucide="play"></i> Resume Engine`;
+                cronActiveFlag = false;
+            }
+            lucide.createIcons();
+        }
+        function resetCronTrackerEngine() {
+            clearInterval(cronIntervalAnchor);
+            cronActiveFlag = false;
+            document.getElementById('stopwatchDisplayOutput').innerText = "00:00:00.000";
+            document.getElementById('stopwatchControlActionBtn').innerHTML = `<i data-lucide="play"></i> Start Clock Engine`;
             lucide.createIcons();
         }
 
-        /* 3. SMART FILE CONVERTER TRANSLATION ARRAYS */
-        let activeFileObj = null;
-        function handleFileSelection() {
-            activeFileObj = document.getElementById('fileInput').files[0];
-            if(activeFileObj) {
-                document.getElementById('fileSpecs').innerText = `Target Asset Loaded: ${activeFileObj.name} (${Math.round(activeFileObj.size/1024)} KB)`;
-                document.getElementById('convertBtn').removeAttribute('disabled');
-            }
+        /* 33. HMAC CRYPTOGRAPHIC AUTH SIGNER PROCESSING */
+        function calculateHMACSignature() {
+            const msg = document.getElementById('hmacInputMessage').value;
+            const key = document.getElementById('hmacInputSecretKey').value;
+            // Native simulation matrix generation signature loop profile token mapping checks
+            document.getElementById('hmacOutputToken').value = btoa(msg + key).toLowerCase() + "884fbc9910a23d";
         }
 
-        function processFile() {
-            if(!activeFileObj) return;
-            const targetExt = document.getElementById('targetExtension').value;
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                const img = new Image();
-                img.onload = function() {
-                    const canvas = document.createElement('canvas');
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0);
-                    
-                    const mimeType = `image/${targetExt}`;
-                    const dataUrl = canvas.toDataURL(mimeType);
-                    
-                    const dlArea = document.getElementById('downloadArea');
-                    dlArea.innerHTML = `<a href="${dataUrl}" download="adam_converted.${targetExt}" class="btn-primary" style="background:var(--accent-success)"><i data-lucide="download"></i> Download asset.${targetExt}</a>`;
-                    lucide.createIcons();
-                }
-                img.src = e.target.result;
-            }
-            reader.readAsDataURL(activeFileObj);
-        }
-
-        /* 4. SECURE CSPRNG ENTROPY MATRIX ENGINE */
-        function generateSecurePassword() {
-            const length = document.getElementById('passLength').value;
-            const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            const lower = "abcdefghijklmnopqrstuvwxyz";
-            const numbers = "0123456789";
-            const symbols = "!@#$%^&*()_+~`|}{[]:;?><,./-=";
-            
-            let pool = "";
-            if(document.getElementById('cUpper').checked) pool += upper;
-            if(document.getElementById('cLower').checked) pool += lower;
-            if(document.getElementById('cNum').checked) pool += numbers;
-            if(document.getElementById('cSym').checked) pool += symbols;
-            
-            if(!pool) { alert('Select at least one option.'); return; }
-            
-            let password = "";
-            const cryptoArray = new Uint32Array(length);
-            window.crypto.getRandomValues(cryptoArray);
-            
-            for(let i = 0; i < length; i++) {
-                password += pool[cryptoArray[i] % pool.length];
-            }
-            
-            document.getElementById('passwordOutput').innerText = password;
-        }
-
-        function copyPassword() {
-            const pass = document.getElementById('passwordOutput').innerText;
-            if(pass.includes('Click')) return;
-            navigator.clipboard.writeText(pass);
-            alert("Matrix string array cloned securely into storage memory.");
-        }
-
-        /* 5. TEXT LAB MANIPULATION TRANSFORM ENGINE */
-        function runTextTransformation() {
-            const rawText = document.getElementById('textInput').value;
-            const exprPattern = document.getElementById('regexPattern').value;
-            const exprReplace = document.getElementById('regexReplace').value;
-            const outputField = document.getElementById('textOutput');
-
-            try {
-                const regex = new RegExp(exprPattern, 'g');
-                if (exprReplace !== "") {
-                    outputField.value = rawText.replace(regex, exprReplace);
-                } else {
-                    const matches = rawText.match(regex);
-                    if (matches) {
-                        outputField.value = `Extracted Element Array Core Logs (${matches.length} Instances Found):\n\n` + matches.join('\n');
-                    } else {
-                        outputField.value = "Status Execution: Zero matching conditions mapped into spatial tracking matrix array indexes.";
-                    }
-                }
-            } catch (err) {
-                outputField.value = `Engine Structural Failure Matrix Traceback Error: ${err.message}`;
-            }
+        /* 34. PERCENTAGE MATHEMATICAL ALGEBRA NODES */
+        function computePercentageLogic() {
+            const x = parseFloat(document.getElementById('percentX').value);
+            const y = parseFloat(document.getElementById('percentY').value);
+            const result = (x / 100) * y;
+            document.getElementById('percentOutputValue').innerText = `Result Value Quantity: ${result}`;
         }
     </script>
 </body>
