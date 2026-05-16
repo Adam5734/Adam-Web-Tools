@@ -191,11 +191,11 @@
 
         /* Code Compiler Layout */
         .code-editor { font-family: 'Courier New', Courier, monospace; min-height: 280px; resize: vertical; }
-        .output-wrapper-box { position: relative; }
+        .output-wrapper-box { display: flex; flex-direction: column; }
         .terminal-output {
             background: #05070f; border: 1px solid var(--border); border-radius: 8px;
             padding: 1rem; font-family: 'Courier New', Courier, monospace; font-size: 0.9rem;
-            min-height: 280px; white-space: pre-wrap; color: #10b981; overflow-y: auto;
+            height: 280px; white-space: pre-wrap; color: #10b981; overflow-y: auto;
         }
         .control-strip-under { display: flex; justify-content: flex-end; gap: 10px; margin-top: 0.75rem; }
         .btn-small { background: var(--bg-surface-elevated); border: 1px solid var(--border); color: var(--text-main); padding: 0.4rem 1rem; border-radius: 6px; font-size: 0.85rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; }
@@ -316,15 +316,19 @@
                 </div>
                 <div class="form-group output-wrapper-box">
                     <label>Execution Output Window</label>
+                    
+                    <!-- HTML Native Iframe Output Container Container -->
                     <div id="htmlOutputWrapper" style="display:block; background:#fff; border-radius:8px; height:280px; overflow:hidden; border: 1px solid var(--border);">
                         <iframe id="htmlPreview" style="width:100%; height:100%; border:none;"></iframe>
                     </div>
+                    
+                    <!-- Python Native Terminal Output Container -->
                     <div id="pythonOutputWrapper" class="terminal-output" style="display:none;">[Terminal Ready. Press Run...]</div>
                     
-                    <!-- Control Buttons Under Output Window -->
+                    <!-- Fixed Position Interface Control Buttons Row underneath Workspace elements -->
                     <div class="control-strip-under">
-                        <button class="btn-small" onclick="clearOutputWindow()"><i data-lucide="trash-2"></i> Clear</button>
-                        <button class="btn-small" onclick="launchOutputFullscreen()"><i data-lucide="maximize"></i> Go Fullscreen</button>
+                        <button class="btn-small" onclick="clearOutputWindow()"><i data-lucide="trash-2"></i> Clear Output</button>
+                        <button class="btn-small" onclick="launchOutputFullscreen()"><i data-lucide="maximize"></i> Fullscreen Preview</button>
                     </div>
                 </div>
             </div>
