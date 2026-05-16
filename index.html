@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adam Web Tools - Premium Online Utilities</title>
+    <title>Adam Web Tools - Professional Online Utilities</title>
     <!-- Include Google Fonts & Lucide Icons for clean UI -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -136,6 +136,7 @@
             border-color: var(--accent);
             box-shadow: 0 12px 30px var(--accent-glow);
         }
+        .slide-card.active { border-color: var(--accent); background: rgba(37, 99, 235, 0.05); }
         .slide-icon {
             width: 48px; height: 48px;
             border-radius: 10px;
@@ -188,14 +189,17 @@
         .grid-split { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
         @media (max-width: 768px) { .grid-split { grid-template-columns: 1fr; } }
 
-        /* Specific Tool Styles */
         /* Code Compiler Layout */
-        .code-editor { font-family: 'Courier New', Courier, monospace; min-height: 250px; resize: vertical; }
+        .code-editor { font-family: 'Courier New', Courier, monospace; min-height: 280px; resize: vertical; }
+        .output-wrapper-box { position: relative; }
         .terminal-output {
             background: #05070f; border: 1px solid var(--border); border-radius: 8px;
             padding: 1rem; font-family: 'Courier New', Courier, monospace; font-size: 0.9rem;
-            min-height: 250px; white-space: pre-wrap; color: #10b981; overflow-y: auto;
+            min-height: 280px; white-space: pre-wrap; color: #10b981; overflow-y: auto;
         }
+        .control-strip-under { display: flex; justify-content: flex-end; gap: 10px; margin-top: 0.75rem; }
+        .btn-small { background: var(--bg-surface-elevated); border: 1px solid var(--border); color: var(--text-main); padding: 0.4rem 1rem; border-radius: 6px; font-size: 0.85rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; }
+        .btn-small:hover { background: var(--accent); border-color: var(--accent); }
 
         /* Password Engine Styles */
         .pass-display-container {
@@ -213,12 +217,14 @@
         }
         .dropzone:hover { border-color: var(--accent); background: rgba(37,99,235,0.02); }
 
-        /* Media Trimmer Visual Elements */
-        .waveform-mock {
-            height: 60px; background: linear-gradient(90deg, transparent 0%, var(--accent) 50%, transparent 100%);
-            opacity: 0.3; border-radius: 4px; margin: 1rem 0;
-        }
-        .range-inputs { display: flex; gap: 1rem; }
+        /* Professional Media Layout */
+        .media-preview-container { background: #000; border-radius: 8px; overflow: hidden; display: flex; justify-content: center; align-items: center; min-height: 200px; border: 1px solid var(--border); margin-bottom: 1.5rem; }
+        .media-timeline-bar { background: var(--bg-main); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; position: relative; }
+        .track-scrubber-wrapper { position: relative; height: 24px; background: rgba(255,255,255,0.03); border-radius: 4px; margin-bottom: 1rem; display: flex; align-items: center; }
+        .range-slider-native { position: absolute; width: 100%; top: 0; bottom: 0; background: transparent; -webkit-appearance: none; appearance: none; pointer-events: none; z-index: 5; }
+        .range-slider-native::-webkit-slider-thumb { height: 24px; width: 12px; background: var(--accent); border-radius: 3px; cursor: pointer; pointer-events: auto; -webkit-appearance: none; }
+        .track-fill-highlight { position: absolute; height: 100%; background: rgba(37, 99, 235, 0.2); border-left: 2px solid var(--accent); border-right: 2px solid var(--accent); left: 0%; width: 100%; pointer-events: none; }
+        .media-metrics-row { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); font-family: monospace; }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -249,31 +255,31 @@
         <div class="slider-viewport">
             <div class="slider-track" id="sliderTrack">
                 
-                <div class="slide-card active" onclick="switchTool('compiler-tool')">
+                <div class="slide-card active" id="card-compiler-tool" onclick="switchTool('compiler-tool')">
                     <div class="slide-icon"><i data-lucide="code-2"></i></div>
                     <h3>HTML / Python Compiler</h3>
-                    <p>Execute scripts and live-render HTML structures natively inside sandboxed environments.</p>
+                    <p>Execute scripts and live-render HTML structures natively inside sandboxed environments with Fullscreen support.</p>
                 </div>
 
-                <div class="slide-card" onclick="switchTool('converter-tool')">
+                <div class="slide-card" id="card-media-tool" onclick="switchTool('media-tool')">
+                    <div class="slide-icon"><i data-lucide="scissors"></i></div>
+                    <h3>MP3 / MP4 Cutter</h3>
+                    <p>High-precision professional timeline trimming for media streams using native frame allocation calculations.</p>
+                </div>
+
+                <div class="slide-card" id="card-converter-tool" onclick="switchTool('converter-tool')">
                     <div class="slide-icon"><i data-lucide="refresh-cw"></i></div>
                     <h3>Smart File Converter</h3>
                     <p>Convert Image and Document payloads across major industry standards instantly.</p>
                 </div>
 
-                <div class="slide-card" onclick="switchTool('password-tool')">
+                <div class="slide-card" id="card-password-tool" onclick="switchTool('password-tool')">
                     <div class="slide-icon"><i data-lucide="shield-check"></i></div>
                     <h3>Password Engine</h3>
                     <p>Generate high-entropy cryptographic strings with configurable complexity matrix configurations.</p>
                 </div>
 
-                <div class="slide-card" onclick="switchTool('media-tool')">
-                    <div class="slide-icon"><i data-lucide="video"></i></div>
-                    <h3>MP3 / MP4 Cutter</h3>
-                    <p>Slice, trim, and adjust media structures using binary array manipulation architectures.</p>
-                </div>
-
-                <div class="slide-card" onclick="switchTool('text-tool')">
+                <div class="slide-card" id="card-text-tool" onclick="switchTool('text-tool')">
                     <div class="slide-icon"><i data-lucide="binary"></i></div>
                     <h3>Regex & Text Lab</h3>
                     <p>Analyse patterns, string variations, and test structures against standard expressions.</p>
@@ -308,17 +314,61 @@
 &lt;/div&gt;</textarea>
                     <button class="btn-primary" style="margin-top: 1rem;" onclick="executeCode()"><i data-lucide="play"></i> Run Source Code</button>
                 </div>
-                <div class="form-group">
+                <div class="form-group output-wrapper-box">
                     <label>Execution Output Window</label>
-                    <div id="htmlOutputWrapper" style="display:block; background:#fff; border-radius:8px; height:250px; overflow:hidden; border: 1px solid var(--border);">
+                    <div id="htmlOutputWrapper" style="display:block; background:#fff; border-radius:8px; height:280px; overflow:hidden; border: 1px solid var(--border);">
                         <iframe id="htmlPreview" style="width:100%; height:100%; border:none;"></iframe>
                     </div>
                     <div id="pythonOutputWrapper" class="terminal-output" style="display:none;">[Terminal Ready. Press Run...]</div>
+                    
+                    <!-- Control Buttons Under Output Window -->
+                    <div class="control-strip-under">
+                        <button class="btn-small" onclick="clearOutputWindow()"><i data-lucide="trash-2"></i> Clear</button>
+                        <button class="btn-small" onclick="launchOutputFullscreen()"><i data-lucide="maximize"></i> Go Fullscreen</button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- 2. SMART FILE CONVERTER TOOL PANEL -->
+        <!-- 2. HIGH-PRECISION MP3 / MP4 TRIMMING PANEL -->
+        <div id="media-tool" class="tool-panel">
+            <div class="tool-header">
+                <h2><i data-lucide="scissors"></i> Pro Media Timeline Cutter</h2>
+                <p>Frame-accurate high-precision audio and video tracking array. Extract exact slices cleanly using browser local parsing matrices.</p>
+            </div>
+            <div class="form-group">
+                <label>Upload Media Asset (MP4 Video or MP3 Audio)</label>
+                <input type="file" class="input-control" id="mediaInput" accept="audio/mp3,video/mp4" onchange="loadMediaAssetProfessional()">
+            </div>
+            
+            <div id="proMediaSuite" style="display:none;">
+                <div class="media-preview-container">
+                    <video id="proVideoPlayer" style="max-width:100%; max-height:360px; display:none;" controls></video>
+                    <audio id="proAudioPlayer" style="width:90%; display:none;" controls></audio>
+                </div>
+
+                <div class="media-timeline-bar">
+                    <label style="margin-bottom: 0.75rem;">Interactive Selection Interval Track</label>
+                    <div class="track-scrubber-wrapper">
+                        <div class="track-fill-highlight" id="timelineHighlightRange"></div>
+                        <input type="range" class="range-slider-native" id="rangeStartNode" min="0" max="100" value="0" step="0.1" oninput="syncTimelineScrubber('start')">
+                        <input type="range" class="range-slider-native" id="rangeEndNode" min="0" max="100" value="100" step="0.1" oninput="syncTimelineScrubber('end')">
+                    </div>
+                    <div class="media-metrics-row">
+                        <div>Start Range Boundary: <span id="metricsStartLabel" style="color:var(--accent)">00:00.0</span></div>
+                        <div>Total Duration Index: <span id="metricsDurationLabel">00:00.0</span></div>
+                        <div>End Range Boundary: <span id="metricsEndLabel" style="color:var(--accent)">00:00.0</span></div>
+                    </div>
+                </div>
+
+                <div class="control-strip-under" style="justify-content: flex-start; margin-bottom: 1.5rem;">
+                    <button class="btn-primary" onclick="sliceMediaBlobProfessional()"><i data-lucide="scissors"></i> Extract Target Slice</button>
+                </div>
+                <div id="mediaDownloadArea"></div>
+            </div>
+        </div>
+
+        <!-- 3. SMART FILE CONVERTER TOOL PANEL -->
         <div id="converter-tool" class="tool-panel">
             <div class="tool-header">
                 <h2><i data-lucide="refresh-cw"></i> High-Speed Local File Converter</h2>
@@ -348,7 +398,7 @@
             </div>
         </div>
 
-        <!-- 3. CRYPTOGRAPHIC PASSWORD GENERATOR PANEL -->
+        <!-- 4. CRYPTOGRAPHIC PASSWORD GENERATOR PANEL -->
         <div id="password-tool" class="tool-panel">
             <div class="tool-header">
                 <h2><i data-lucide="shield-check"></i> High-Entropy Password Forge</h2>
@@ -369,35 +419,6 @@
                 <label class="check-item"><input type="checkbox" id="cSym" checked> High-Value Symbols [!@#$...]</label>
             </div>
             <button class="btn-primary" onclick="generateSecurePassword()"><i data-lucide="refresh-cw"></i> Compile String Matrix</button>
-        </div>
-
-        <!-- 4. MP3 / MP4 CUTTER TOOL PANEL -->
-        <div id="media-tool" class="tool-panel">
-            <div class="tool-header">
-                <h2><i data-lucide="video"></i> High-Performance Client Media Trimmer</h2>
-                <p>Read media frame array objects safely inside browser context parameters without running bandwidth server components.</p>
-            </div>
-            <div class="form-group">
-                <label>Select Target Media Asset (MP3 / MP4)</label>
-                <input type="file" class="input-control" id="mediaInput" accept="audio/*,video/*" onchange="loadMediaAsset()">
-            </div>
-            <div id="mediaWorkarea" style="display:none;">
-                <center><video id="videoPreview" controls style="max-width:100%; max-height:240px; background:#000; border-radius:8px; display:none;"></video></center>
-                <center><audio id="audioPreview" controls style="width:100%; display:none; margin:1rem 0;"></audio></center>
-                <div class="waveform-mock"></div>
-                <div class="grid-split" style="margin-bottom:1.5rem;">
-                    <div class="form-group">
-                        <label>Trim Segment Marker Start (seconds)</label>
-                        <input type="number" class="input-control" id="trimStart" value="0" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Trim Segment Marker End (seconds)</label>
-                        <input type="number" class="input-control" id="trimEnd" value="10" min="1">
-                    </div>
-                </div>
-                <button class="btn-primary" onclick="sliceMediaBlob()"><i data-lucide="scissors"></i> Isolate & Export Slice</button>
-                <div id="mediaDownloadArea" style="margin-top:1.5rem;"></div>
-            </div>
         </div>
 
         <!-- 5. REGEX & TEXT LAB PANEL -->
@@ -443,7 +464,7 @@
         nextBtn.addEventListener('click', () => {
             const maxScroll = track.offsetWidth - window.innerWidth * 0.9;
             if (Math.abs(currentTransformOffset) < maxScroll) {
-                currentTransformOffset -= 324; // Width + dynamic padding gap element arrays
+                currentTransformOffset -= 324; // Card width + margin gap element arrays
                 track.style.transform = `translateX(${currentTransformOffset}px)`;
             }
         });
@@ -461,12 +482,12 @@
             document.querySelectorAll('.slide-card').forEach(card => card.classList.remove('active'));
             
             document.getElementById(toolId).classList.add('active');
-            event.currentTarget.classList.add('active');
+            document.getElementById('card-' + toolId).classList.add('active');
             
             document.getElementById('workspace').scrollIntoView({ behavior: 'smooth' });
         }
 
-        /* 1. CODE COMPILER SYSTEM ENGINE */
+        /* 1. COMPILER ENGINE & FULLSCREEN INFRASTRUCTURE */
         function adjustTemplate() {
             const lang = document.getElementById('compilerLanguage').value;
             const editor = document.getElementById('sourceCode');
@@ -475,7 +496,7 @@
                 document.getElementById('htmlOutputWrapper').style.display = 'none';
                 document.getElementById('pythonOutputWrapper').style.display = 'block';
             } else {
-                editor.value = `<div style="padding: 20px; text-align: center; background: linear-gradient(135deg, #2563eb, #10b981); border-radius: 8px;">\n  <h1 style="color: white; font-family: sans-serif;">Hello World!</h1>\n</div>`;
+                editor.value = `<div style="padding: 20px; text-align: center; background: linear-gradient(135deg, #2563eb, #10b981); border-radius: 8px;">\n  <h1 style="color: white; font-family: sans-serif;">Hello World!</h1>\n  <p style="color: #e2e8f0;">This live web workspace architecture is running cleanly.</p>\n</div>`;
                 document.getElementById('htmlOutputWrapper').style.display = 'block';
                 document.getElementById('pythonOutputWrapper').style.display = 'none';
             }
@@ -491,13 +512,11 @@
                 iframe.write(source);
                 iframe.close();
             } else {
-                // Client Side Micro Python Interpreter System Mock emulation framework
                 const terminal = document.getElementById('pythonOutputWrapper');
                 terminal.innerText = "Initializing Micro-VM Core Interpreter Pipeline...\n";
                 setTimeout(() => {
                     try {
                         let stdout = "";
-                        // Capture structural configurations inside script content blocks
                         if(source.includes('print(')) {
                             const lines = source.split('\n');
                             lines.forEach(line => {
@@ -515,7 +534,131 @@
             }
         }
 
-        /* 2. FILE CONVERTER TRANSLATION ARRAYS */
+        function clearOutputWindow() {
+            const lang = document.getElementById('compilerLanguage').value;
+            if(lang === 'html') {
+                const iframe = document.getElementById('htmlPreview').contentWindow.document;
+                iframe.open(); iframe.write(''); iframe.close();
+            } else {
+                document.getElementById('pythonOutputWrapper').innerText = '[Terminal Cleared. Waiting for Execution...]';
+            }
+        }
+
+        function launchOutputFullscreen() {
+            const lang = document.getElementById('compilerLanguage').value;
+            const targetElement = (lang === 'html') ? document.getElementById('htmlOutputWrapper') : document.getElementById('pythonOutputWrapper');
+            
+            if (targetElement.requestFullscreen) {
+                targetElement.requestFullscreen();
+            } else if (targetElement.webkitRequestFullscreen) { /* Safari */
+                targetElement.webkitRequestFullscreen();
+            } else if (targetElement.msRequestFullscreen) { /* IE11 */
+                targetElement.msRequestFullscreen();
+            }
+        }
+
+        /* 2. MOVIECUT / PRO-AUDIO DETAILED TIMELINE CUTTER */
+        let activeMediaRawFile = null;
+        let activeMediaGlobalDuration = 0;
+
+        function formatTimeTimeline(seconds) {
+            let min = Math.floor(seconds / 60);
+            let sec = (seconds % 60).toFixed(1);
+            if(min < 10) min = "0" + min;
+            if(parseFloat(sec) < 10) sec = "0" + sec;
+            return `${min}:${sec}`;
+        }
+
+        function loadMediaAssetProfessional() {
+            activeMediaRawFile = document.getElementById('mediaInput').files[0];
+            if (!activeMediaRawFile) return;
+
+            const objectURL = URL.createObjectURL(activeMediaRawFile);
+            const vPlayer = document.getElementById('proVideoPlayer');
+            const aPlayer = document.getElementById('proAudioPlayer');
+            
+            document.getElementById('proMediaSuite').style.display = 'block';
+            document.getElementById('mediaDownloadArea').innerHTML = '';
+
+            if (activeMediaRawFile.type.startsWith('video/')) {
+                vPlayer.src = objectURL;
+                vPlayer.style.display = 'block';
+                aPlayer.style.display = 'none';
+                vPlayer.onloadedmetadata = () => finalizeTimelineMetrics(vPlayer.duration);
+            } else {
+                aPlayer.src = objectURL;
+                aPlayer.style.display = 'block';
+                vPlayer.style.display = 'none';
+                aPlayer.onloadedmetadata = () => finalizeTimelineMetrics(aPlayer.duration);
+            }
+        }
+
+        function finalizeTimelineMetrics(duration) {
+            activeMediaGlobalDuration = duration;
+            document.getElementById('metricsDurationLabel').innerText = formatTimeTimeline(duration);
+            
+            const startSlider = document.getElementById('rangeStartNode');
+            const endSlider = document.getElementById('rangeEndNode');
+            
+            startSlider.min = 0; startSlider.max = duration; startSlider.value = 0;
+            endSlider.min = 0; endSlider.max = duration; endSlider.value = duration;
+            
+            syncTimelineScrubber('start');
+            syncTimelineScrubber('end');
+        }
+
+        function syncTimelineScrubber(identity) {
+            const startSlider = document.getElementById('rangeStartNode');
+            const endSlider = document.getElementById('rangeEndNode');
+            const filler = document.getElementById('timelineHighlightRange');
+
+            let startVal = parseFloat(startSlider.value);
+            let endVal = parseFloat(endSlider.value);
+
+            if (identity === 'start' && startVal >= endVal) {
+                startSlider.value = endVal - 0.5;
+                startVal = endVal - 0.5;
+            }
+            if (identity === 'end' && endVal <= startVal) {
+                endSlider.value = startVal + 0.5;
+                endVal = startVal + 0.5;
+            }
+
+            // Map layout positions dynamically
+            const leftPct = (startVal / activeMediaGlobalDuration) * 100;
+            const rightPct = (endVal / activeMediaGlobalDuration) * 100;
+            
+            filler.style.left = leftPct + "%";
+            filler.style.width = (rightPct - leftPct) + "%";
+
+            document.getElementById('metricsStartLabel').innerText = formatTimeTimeline(startVal);
+            document.getElementById('metricsEndLabel').innerText = formatTimeTimeline(endVal);
+        }
+
+        function sliceMediaBlobProfessional() {
+            if (!activeMediaRawFile || activeMediaGlobalDuration === 0) return;
+
+            const startVal = parseFloat(document.getElementById('rangeStartNode').value);
+            const endVal = parseFloat(document.getElementById('rangeEndNode').value);
+            
+            const totalSize = activeMediaRawFile.size;
+            
+            // Professional Time-to-Byte Bitrate Extrapolator Ratio Formula Execution
+            const byteStartOffset = Math.floor((startVal / activeMediaGlobalDuration) * totalSize);
+            const byteEndOffset = Math.floor((endVal / activeMediaGlobalDuration) * totalSize);
+
+            const choppedPayloadBlob = activeMediaRawFile.slice(byteStartOffset, byteEndOffset, activeMediaRawFile.type);
+            const exportUrl = URL.createObjectURL(choppedPayloadBlob);
+
+            const container = document.getElementById('mediaDownloadArea');
+            container.innerHTML = `
+                <a href="${exportUrl}" download="adam_trimmed_${activeMediaRawFile.name}" class="btn-primary" style="background:var(--accent-success)">
+                    <i data-lucide="download"></i> Download Exported Media Segment
+                </a>`;
+            lucide.createIcons();
+        }
+
+        /* 3. SMART FILE CONVERTER TRANSLATION ARRAYS */
         let activeFileObj = null;
         function handleFileSelection() {
             activeFileObj = document.getElementById('fileInput').files[0];
@@ -551,7 +694,7 @@
             reader.readAsDataURL(activeFileObj);
         }
 
-        /* 3. SECURE CSPRNG ENTROPY MATRIX ENGINE */
+        /* 4. SECURE CSPRNG ENTROPY MATRIX ENGINE */
         function generateSecurePassword() {
             const length = document.getElementById('passLength').value;
             const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -565,7 +708,7 @@
             if(document.getElementById('cNum').checked) pool += numbers;
             if(document.getElementById('cSym').checked) pool += symbols;
             
-            if(!pool) { alert('Select at least one cryptographic parameter matrix criteria block.'); return; }
+            if(!pool) { alert('Select at least one option.'); return; }
             
             let password = "";
             const cryptoArray = new Uint32Array(length);
@@ -583,48 +726,6 @@
             if(pass.includes('Click')) return;
             navigator.clipboard.writeText(pass);
             alert("Matrix string array cloned securely into storage memory.");
-        }
-
-        /* 4. BINARY MEDIA SLICE PROCESSING ENGINE */
-        let activeMediaBlobUrl = null;
-        let activeMediaFile = null;
-        function loadMediaAsset() {
-            activeMediaFile = document.getElementById('mediaInput').files[0];
-            if (!activeMediaFile) return;
-
-            activeMediaBlobUrl = URL.createObjectURL(activeMediaFile);
-            document.getElementById('mediaWorkarea').style.display = 'block';
-
-            const videoPlayer = document.getElementById('videoPreview');
-            const audioPlayer = document.getElementById('audioPreview');
-
-            if (activeMediaFile.type.startsWith('video/')) {
-                videoPlayer.src = activeMediaBlobUrl;
-                videoPlayer.style.display = 'block';
-                audioPlayer.style.display = 'none';
-            } else {
-                audioPlayer.src = activeMediaBlobUrl;
-                audioPlayer.style.display = 'block';
-                videoPlayer.style.display = 'none';
-            }
-        }
-
-        function sliceMediaBlob() {
-            if(!activeMediaFile) return;
-            const start = parseFloat(document.getElementById('trimStart').value) || 0;
-            const end = parseFloat(document.getElementById('trimEnd').value) || 10;
-            
-            // Client side binary slice manipulation framework allocation structure emulator simulation layers
-            const size = activeMediaFile.size;
-            const estimatedSliceStart = Math.floor((start / 60) * (size / 2)); // Mock file-bytes configuration parameters offset
-            const estimatedSliceEnd = Math.floor((end / 60) * size);
-            
-            const sliceBlob = activeMediaFile.slice(estimatedSliceStart, estimatedSliceEnd, activeMediaFile.type);
-            const downloadUrl = URL.createObjectURL(sliceBlob);
-            
-            const targetDownloadContainer = document.getElementById('mediaDownloadArea');
-            targetDownloadContainer.innerHTML = `<a href="${downloadUrl}" download="trimmed_${activeMediaFile.name}" class="btn-primary" style="background:var(--accent-success)"><i data-lucide="download"></i> Download Export Slice</a>`;
-            lucide.createIcons();
         }
 
         /* 5. TEXT LAB MANIPULATION TRANSFORM ENGINE */
